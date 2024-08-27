@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "GinoVistar",
+  title: "GnoVistar",
   description: "Your AI-Powered Knowledge Hub. Organize, analyze, and synthesize information with ease. ",
 };
 

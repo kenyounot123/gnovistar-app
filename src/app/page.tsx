@@ -9,7 +9,7 @@ export default function LandingPage() {
       <header className="px-4 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <BookOpen className="h-6 w-6 mr-2" />
-          <span className="font-bold text-lg">GinoVistar</span>
+          <span className="font-bold text-lg">Gnovistar</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="#features">
@@ -45,25 +45,26 @@ export default function LandingPage() {
                   <Link href="#features">Learn More</Link>
                 </Button>
               </div>
-              <div className="w-[1400px] h-[700px] bg-primary rounded shadow-lg"></div>
+              <div className="w-[1400px] h-[700px] border rounded shadow-lg"></div>
             </div>
           </div>
         </section>
         <section id="features" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">Key Features</h2>
+            {/* how it works and then next section is key features maybe no about section as well and add footer */}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">How it Works</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="flex flex-col items-center text-center border-2 h-[400px] rounded">
+              <div className="p-5 flex flex-col items-center text-center border-2 h-[400px] rounded">
                 <FileText className="h-12 w-12 mb-4 text-accent" />
                 <h3 className="text-xl font-bold mb-2">Interactive PDF Viewer</h3>
                 <p className="text-muted-foreground">Highlight, annotate, and comment on your PDFs with ease.</p>
               </div>
-              <div className="flex flex-col items-center text-center border-2 h-[400px] rounded">
+              <div className="p-5 flex flex-col items-center text-center border-2 h-[400px] rounded">
                 <Brain className="h-12 w-12 mb-4 text-accent" />
                 <h3 className="text-xl font-bold mb-2">AI-Powered Summarization</h3>
                 <p className="text-muted-foreground">Get quick insights with AI-generated summaries of your documents.</p>
               </div>
-              <div className="flex flex-col items-center text-center border-2 h-[400px] rounded">
+              <div className="p-5 flex flex-col items-center text-center border-2 h-[400px] rounded">
                 <Lock className="h-12 w-12 mb-4 text-accent" />
                 <h3 className="text-xl font-bold mb-2">Batch PDF Upload</h3>
                 <p className="text-muted-foreground">Easily upload and organize multiple PDFs at once, streamlining your document management.</p>
@@ -197,9 +198,9 @@ export default function LandingPage() {
         </section>
         <section id="about" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">About GinoVistar</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">About Gnovistar</h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground text-center mb-12">
-              GinoVistar is a powerful document management app that allows users to annotate, take notes, and collaborate on PDFs, while leveraging AI to generate summaries and key insights, making it the ultimate tool for enhancing productivity and document workflow.
+              Gnovistar is a powerful document management app that allows users to annotate, take notes, and collaborate on PDFs, while leveraging AI to generate summaries and key insights, making it the ultimate tool for enhancing productivity and document workflow.
             </p>
             <div className="flex justify-center">
               <Button asChild>
@@ -210,7 +211,7 @@ export default function LandingPage() {
         </section>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-muted-foreground">© 2024 GinoVistar. All rights reserved.</p>
+        <p className="text-xs text-muted-foreground">© 2024 Gnovistar. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link className="text-xs hover:underline underline-offset-4" href="#">
             Terms of Service
