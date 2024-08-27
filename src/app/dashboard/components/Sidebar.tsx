@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
@@ -14,8 +14,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FileText } from "lucide-react";
+import { Plus } from "lucide-react";
 
-export function GnovistarSidebar() {
+interface SideBarProps {
+  children: ReactNode
+}
+export function GnovistarSidebar({children}:SideBarProps) {
   const links = [
     {
       label: "Dashboard",
@@ -50,7 +54,7 @@ export function GnovistarSidebar() {
   return (
     <div
       className={cn(
-        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 w-full mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+        "rounded-md flex flex-col md:flex-row w-full flex-1 w-full mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
         "h-screen"
       )}
     >
@@ -59,6 +63,11 @@ export function GnovistarSidebar() {
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
+              {open && <Link href="/dashboard/new-book">
+                <Button className="w-full mb-4">
+                  <Plus className="mr-2 h-4 w-4" /> New Book
+                </Button>
+              </Link>}
               {links.map((link, idx) => (
                 <SidebarLink className="text-primary" key={idx} link={link} />
               ))}
@@ -83,6 +92,7 @@ export function GnovistarSidebar() {
           </div>
         </SidebarBody>
       </Sidebar>
+      {children}
     </div>
   );
 }
@@ -98,7 +108,7 @@ export const Logo = () => {
         animate={{ opacity: 1 }}
         className="font-medium text-black dark:text-white whitespace-pre"
       >
-        Acet Labs
+        Gnovistar
       </motion.span>
     </Link>
   );
@@ -114,26 +124,3 @@ export const LogoIcon = () => {
   );
 };
 
-// Dummy dashboard component with content
-const Dashboard = () => {
-  return (
-    <div className="flex flex-1">
-      <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-        
-         <div className="mb-4">
-           <Input type="text" placeholder="Search your notes..." className="w-full dark:bg-neutral-800" />
-         </div>
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-           {/* PDF Card */}
-           <div className="p-4 rounded shadow dark:bg-neutral-800">
-             <FileText className="h-8 w-8 mb-2" />
-             <h3 className="text-lg font-semibold mb-2">Sample PDF</h3>
-             <p className="text-sm text-gray-400 mb-4">Last edited: 2 days ago</p>
-             <Button variant="outline" className="w-full">Open PDF</Button>
-           </div>
-           {/* Add more cards for other PDFs or notes */}
-         </div>
-      </div>
-    </div>
-  );
-};
