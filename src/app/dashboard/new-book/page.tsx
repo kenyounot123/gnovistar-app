@@ -11,18 +11,20 @@ export default function NewBookForm() {
   const [description, setDescription] = useState<string>("");
   const [purpose, setPurpose] = useState<string>("");
   const [confirmation, setConfirmation] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-   
-    setConfirmation(true);
-
-    // Call Gemini API
+    setLoading(true);
     await fetchGeminiData(bookName, description, purpose);
 
-    // Log to console after fetching data
+    
     console.log(`Book: ${bookName}, Purpose: ${purpose}, Description: ${description}`);
+
+    setConfirmation(true);
+    setLoading(true);
   };
 
   const generateGeminiPrompt = (bookName: string, description: string, purpose: string) => {
@@ -141,8 +143,14 @@ export default function NewBookForm() {
               <FormHelperText>What purpose does this book serve you?</FormHelperText>
             </FormControl>
           </div>
-          <Button type="submit" className="w-full mt-4 flex items-center justify-center">
-          ✦ Create 
+          <Button type="submit" className="w-full mt-4 flex items-center justify-center relative" disabled={loading}>
+            {loading ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-6 h-6 border-4 border-t-4 border-gray-200 border-solid rounded-full animate-spin border-t-blue-500"></div>
+              </div>
+            ) : (
+              "✦ Create"
+            )}
           </Button>
         </form>
       </div>
