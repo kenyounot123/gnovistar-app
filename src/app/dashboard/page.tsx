@@ -7,7 +7,7 @@ export default function Dashboard() {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <div className="w-64 bg-white p-4 shadow-md">
-        <h1 className="text-2xl font-bold mb-4">GnoVista</h1>
+        <h1 className="text-2xl font-bold mb-4">GnoVistar</h1>
         <Button className="w-full mb-4">
           <Plus className="mr-2 h-4 w-4" /> New Book
         </Button>
