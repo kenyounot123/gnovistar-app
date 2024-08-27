@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FileText } from "lucide-react";
 
-export function SidebarDemo() {
+export function GnovistarSidebar() {
   const links = [
     {
       label: "Dashboard",
@@ -83,7 +83,6 @@ export function SidebarDemo() {
           </div>
         </SidebarBody>
       </Sidebar>
-      <Dashboard />
     </div>
   );
 }
