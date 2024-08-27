@@ -3,6 +3,9 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
+import {
+  ClerkProvider,
+} from '@clerk/nextjs'
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,18 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="scroll-smooth" lang="en">
-      <body className={poppins.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-            >
-            <Navbar/>
-            {children}
-          </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html className="scroll-smooth" lang="en">
+        <body className={poppins.className}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+              >
+              {children}
+            </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

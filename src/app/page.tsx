@@ -6,9 +6,11 @@ import { MacbookScroll } from "@/components/ui/macbook-scroll"
 import Image from "next/image"
 import { Input } from "@/components/ui/input"
 import { FileStack, Bot, PenTool } from "lucide-react"
+import Navbar from "@/components/Navbar"
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
+      <Navbar/>
       <main className="flex-1">
         <section className="w-full pt-12 md:pt-20">
           <div className="container px-4 md:px-6">
