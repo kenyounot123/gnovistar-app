@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { BookOpen, FileText, Plus } from "lucide-react"
+import Link from "next/link"
 
 export default function Dashboard() {
   return (
@@ -8,9 +9,11 @@ export default function Dashboard() {
       {/* Sidebar */}
       <div className="w-64 bg-white p-4 shadow-md">
         <h1 className="text-2xl font-bold mb-4">GnoVista</h1>
+        <Link href="/dashboard/new-book">
         <Button className="w-full mb-4">
           <Plus className="mr-2 h-4 w-4" /> New Book
         </Button>
+        </Link>
         <div className="space-y-2">
           <Button variant="ghost" className="w-full justify-start">
             <BookOpen className="mr-2 h-4 w-4" /> Book 1
