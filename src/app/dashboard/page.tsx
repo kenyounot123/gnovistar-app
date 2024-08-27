@@ -7,16 +7,16 @@ export default function Dashboard() {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <div className="w-64 bg-white p-4 shadow-md">
-        <h1 className="text-2xl font-bold mb-4">GnoVistar</h1>
+        <h1 className="text-2xl font-bold mb-4">GinoVistar</h1>
         <Button className="w-full mb-4">
           <Plus className="mr-2 h-4 w-4" /> New Book
         </Button>
         <div className="space-y-2">
           <Button variant="ghost" className="w-full justify-start">
-            <BookOpen className="mr-2 h-4 w-4" /> Book 1
+            <BookOpen className="mr-2 h-4 w-4" /> Folder 1
           </Button>
           <Button variant="ghost" className="w-full justify-start">
-            <BookOpen className="mr-2 h-4 w-4" /> Book 2
+            <BookOpen className="mr-2 h-4 w-4" /> Folder 2
           </Button>
         </div>
       </div>

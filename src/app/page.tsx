@@ -25,15 +25,15 @@ export default function LandingPage() {
         </nav>
       </header>
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py- xl:py-32">
+        <section className="w-full pt-12 md:pt-20">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/none text-black dark:text-white">
-                  Welcome to GinoVistar
+                  A powerful platform for <span className="text-primary">PDF annotation, collaboration, and AI-driven insights</span>
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-700 md:text-xl dark:text-muted-foreground">
-                  Your intelligent note-taking companion. Organize, analyze, and enhance your knowledge with AI-powered insights.
+                <p className="mx-auto text-gray-700 md:text-xl dark:text-muted-foreground">
+                  Streamline your document workflow with intuitive tools and smart features.
                 </p>
               </div>
               <div className="space-x-4">
@@ -41,10 +41,11 @@ export default function LandingPage() {
                   {/* link to sign up with clerk */}
                   <Link href="/dashboard">Get Started</Link>
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" className="dark:hover:bg-slate-700">
                   <Link href="#features">Learn More</Link>
                 </Button>
               </div>
+              <div className="w-[1400px] h-[700px] bg-primary rounded shadow-lg"></div>
             </div>
           </div>
         </section>
@@ -52,20 +53,20 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">Key Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="flex flex-col items-center text-center">
-                <FileText className="h-12 w-12 mb-4 text-primary" />
+              <div className="flex flex-col items-center text-center border-2 h-[400px] rounded">
+                <FileText className="h-12 w-12 mb-4 text-accent" />
                 <h3 className="text-xl font-bold mb-2">Interactive PDF Viewer</h3>
                 <p className="text-muted-foreground">Highlight, annotate, and comment on your PDFs with ease.</p>
               </div>
-              <div className="flex flex-col items-center text-center">
-                <Brain className="h-12 w-12 mb-4 text-primary" />
+              <div className="flex flex-col items-center text-center border-2 h-[400px] rounded">
+                <Brain className="h-12 w-12 mb-4 text-accent" />
                 <h3 className="text-xl font-bold mb-2">AI-Powered Summarization</h3>
                 <p className="text-muted-foreground">Get quick insights with AI-generated summaries of your documents.</p>
               </div>
-              <div className="flex flex-col items-center text-center">
-                <Lock className="h-12 w-12 mb-4 text-primary" />
-                <h3 className="text-xl font-bold mb-2">Secure Storage</h3>
-                <p className="text-muted-foreground">Keep your notes and documents safe with encrypted cloud storage.</p>
+              <div className="flex flex-col items-center text-center border-2 h-[400px] rounded">
+                <Lock className="h-12 w-12 mb-4 text-accent" />
+                <h3 className="text-xl font-bold mb-2">Batch PDF Upload</h3>
+                <p className="text-muted-foreground">Easily upload and organize multiple PDFs at once, streamlining your document management.</p>
               </div>
             </div>
           </div>
@@ -198,9 +199,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">About GinoVistar</h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground text-center mb-12">
-              GinoVistar was born from a passion for knowledge and a belief in the power of technology to enhance learning. 
-              Our mission is to provide a tool that not only organizes your thoughts but also helps you gain deeper insights 
-              into your studies and research.
+              GinoVistar is a powerful document management app that allows users to annotate, take notes, and collaborate on PDFs, while leveraging AI to generate summaries and key insights, making it the ultimate tool for enhancing productivity and document workflow.
             </p>
             <div className="flex justify-center">
               <Button asChild>
