@@ -1,4 +1,4 @@
-# GnoVistar
+# Gnovistar
 
 An AI-fueled interactive knowledge collection and management application.
 ## Getting Started
