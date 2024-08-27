@@ -14,7 +14,7 @@ export default function LandingPage() {
       <main className="flex-1">
         <section className="w-full pt-12 md:pt-20">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-4 text-center">
               <div className="overflow-hidden w-full">
                 <MacbookScroll
                   title={
@@ -47,11 +47,11 @@ export default function LandingPage() {
                 <FileStack size={64} className="text-accent"/>
               </div>
               <div>
-                <h1 className="text-3xl font-bold"> Multiple PDF Files Support</h1>
-                <p>Create multiple folders that can contain multiple pdf files</p>
+                <h1 className="text-3xl font-bold mb-5"> Organize with 'Books'</h1>
+                <p className="max-w-[500px]">Start by creating a ‘Book’. Enter a title and description, and let the AI recommend articles from Google Scholar and blogs to jumpstart your collection.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5">
+            <div className="bg-[#5C5C5C] p-5 self-start">
               <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
@@ -61,11 +61,11 @@ export default function LandingPage() {
                 <PenTool size={64} className="text-accent"/>
               </div>
               <div>
-                <h1 className="text-3xl font-bold"> Annotate and Comment</h1>
-                <p>Free to write over the pdf and make your own comments on it.</p>
+                <h1 className="text-3xl font-bold mb-5">Engage with PDFs</h1>
+                <p className="max-w-[500px]">Upload PDFs based on AI suggestions, and make them your own by highlighting, adding notes, and commenting directly on the documents.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5">
+            <div className="bg-[#5C5C5C] p-5 self-start">
               <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
@@ -75,23 +75,23 @@ export default function LandingPage() {
               <Bot size={64} className="text-accent" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">AI Summaries and PDF Generation</h1>
-                <p>Free to write over the pdf and make your own comments on it.</p>
+                <h1 className="text-3xl font-bold mb-5">AI-Genearted Summaries</h1>
+                <p className="max-w-[500px]">Automatically receive summaries and key insights from your PDFs, helping you understand and manage your documents more effectively.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5">
+            <div className="bg-[#5C5C5C] p-5 self-start">
               <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
         </section>
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="features" className="w-full min-h-[800px] py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             {/* how it works and then next section is key features maybe no about section as well and add footer */}
             <h2 className="text-center text-3xl sm:text-4xl md:text-5xl mb-12">Key Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <BgGradientSection title={'Interactive Pdf Viewer'} content={'Highlight, annotate, and comment on your PDFs with ease.'} img={'FileText'}/>
               <BgGradientSection title={'AI-Powered Summarization'} content={'Get quick insights with AI-generated summaries of your documents.'} img={'Brain'}/>
-              <BgGradientSection title={'Batch PDF Upload'} content={'Easily upload and organize multiple PDFs at once, streamlining your document management.'} img={'Folder'}/>
+              <BgGradientSection title={'Batch PDF Collection'} content={'Quickly upload and organize PDFs into your Books for easy access and AI insights.'} img={'Folder'}/>
             </div>
           </div>
         </section>
