@@ -4,22 +4,24 @@ import { Button } from "@/components/ui/button"
 import BgGradientSection from "@/components/BgGradientSection"
 import { MacbookScroll } from "@/components/ui/macbook-scroll"
 import Image from "next/image"
-import { Input } from "@/components/ui/input"
+import { SignInButton, SignedOut } from "@clerk/nextjs"
 import { FileStack, Bot, PenTool } from "lucide-react"
 import Navbar from "@/components/Navbar"
+import { useUser } from '@clerk/clerk-react'
 export default function LandingPage() {
+  const { isSignedIn, user, isLoaded } = useUser()
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar/>
       <main className="flex-1">
-        <section className="w-full pt-12 md:pt-20">
+        <section className="w-full md:pt-20">
           <div className="container px-4 md:px-6">
-            <div className="space-y-4 text-center">
+            <div className="text-center">
               <div className="overflow-hidden w-full">
                 <MacbookScroll
                   title={
                     <>
-                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/none text-black dark:text-white">
+                      <div className="-mt-24 text-3xl sm:text-4xl md:mt-0 md:text-5xl lg:text-6xl/none text-black dark:text-white">
                         A powerful platform for <span className="text-primary">PDF annotation, collaboration, and AI-driven insights</span>
                       </div>
                     </>
@@ -113,7 +115,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Basic PDF viewing
+                    Basic PDF viewing and annotation
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -125,7 +127,19 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Limited storage
+                    Basic AI Summarization
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    1 Book Limit
                   </li>
                 </ul>
                 <Button className="mt-auto font-bold">Sign Up</Button>
@@ -144,7 +158,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Basic PDF viewing
+                    Basic PDF viewing and annotation
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -156,7 +170,31 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Limited storage
+                    Advanced AI Summarization
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    3 Book Limit
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    AI Suggestions and links to articles
                   </li>
                 </ul>
                 <Button className="mt-auto font-bold">Choose Basic</Button>
@@ -165,7 +203,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold mb-4">Pro</h3>
                 <p className="text-4xl font-bold mb-6">$9.99<span className="text-base font-normal">/month</span></p>
                 <ul className="mb-6 space-y-2">
-                  <li className="flex items-center">
+                <li className="flex items-center">
                     <svg
                       className="w-4 h-4 mr-2 text-green-500"
                       fill="none"
@@ -175,7 +213,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Full PDF annotation
+                    Basic PDF viewing and annotation
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -187,7 +225,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    AI summarization
+                    Advanced AI Summarization
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -199,7 +237,31 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Unlimited storage
+                    10 Book Limit
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    AI Suggestions and links to articles
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Youtube videos
                   </li>
                 </ul>
                 <Button className="mt-auto font-bold">Choose Pro</Button>
@@ -214,14 +276,23 @@ export default function LandingPage() {
               Gnovistar is a powerful document management app that allows users to annotate, take notes, and collaborate on PDFs, while leveraging AI to generate summaries and key insights, making it the ultimate tool for enhancing productivity and document workflow.
             </p>
             <div className="flex justify-center">
-              <form>
-                <div className="flex gap-5">
-                  <Input className="w-96" placeholder="Email here"/>
-                  <Button className="font-bold" type="submit">
-                    Sign Up
-                  </Button>
-                </div>
-              </form>
+              <div className="flex gap-5">
+                {isSignedIn ? (
+                  <>
+                    <p className="text-2xl border-2 p-5 bg-secondary rounded">You are already on the waitlist!</p>
+                  </>
+                ) : (
+                  <>
+                    <SignedOut>
+                      <SignInButton>
+                        <Button className="font-bold">
+                          Sign up now
+                        </Button>
+                      </SignInButton>
+                    </SignedOut>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </section>
