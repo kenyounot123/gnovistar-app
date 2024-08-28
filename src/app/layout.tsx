@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl="/">
       <html className="scroll-smooth" lang="en">
         <body className={poppins.className}>
             <ThemeProvider
