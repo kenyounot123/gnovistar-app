@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { Sidebar, SidebarBody, SidebarLink, SideUserButton } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -12,43 +12,43 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { FileText } from "lucide-react";
 import { Plus } from "lucide-react";
+import { useUser, SignedIn, UserButton  } from "@clerk/nextjs";
 
 interface SideBarProps {
   children: ReactNode
 }
 export function GnovistarSidebar({children}:SideBarProps) {
+  const { isSignedIn, isLoaded, user } = useUser()
   const links = [
     {
       label: "Dashboard",
-      href: "#",
+      href: "/dashboard",
       icon: (
         <IconBrandTabler className="text-primary h-5 w-5 flex-shrink-0" />
       ),
     },
-    {
-      label: "Profile",
-      href: "#",
-      icon: (
-        <IconUserBolt className="text-primary h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Settings",
-      href: "#",
-      icon: (
-        <IconSettings className="text-primary h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Logout",
-      href: "#",
-      icon: (
-        <IconArrowLeft className="text-primary h-5 w-5 flex-shrink-0" />
-      ),
-    },
+    // {
+    //   label: "Profile",
+    //   href: "#",
+    //   icon: (
+    //     <IconUserBolt className="text-primary h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
+    // {
+    //   label: "Settings",
+    //   href: "#",
+    //   icon: (
+    //     <IconSettings className="text-primary h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
+    // {
+    //   label: "Logout",
+    //   href: "#",
+    //   icon: (
+    //     <IconArrowLeft className="text-primary h-5 w-5 flex-shrink-0" />
+    //   ),
+    // },
   ];
   const [open, setOpen] = useState(false);
   return (
@@ -74,21 +74,11 @@ export function GnovistarSidebar({children}:SideBarProps) {
             </div>
           </div>
           <div>
-            <SidebarLink
-              link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <Image
-                    src=""
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
+            <SideUserButton user={
+              <SignedIn>
+                <UserButton/>
+              </SignedIn>
+            } name={user?.fullName}/>
           </div>
         </SidebarBody>
       </Sidebar>
@@ -99,7 +89,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
 export const Logo = () => {
   return (
     <Link
-      href="#"
+      href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
       <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
@@ -116,7 +106,7 @@ export const Logo = () => {
 export const LogoIcon = () => {
   return (
     <Link
-      href="#"
+      href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
       <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />

@@ -4,20 +4,24 @@ import { Button } from "@/components/ui/button"
 import BgGradientSection from "@/components/BgGradientSection"
 import { MacbookScroll } from "@/components/ui/macbook-scroll"
 import Image from "next/image"
-import { Input } from "@/components/ui/input"
+import { SignInButton, SignedOut } from "@clerk/nextjs"
 import { FileStack, Bot, PenTool } from "lucide-react"
+import Navbar from "@/components/Navbar"
+import { useUser } from '@clerk/clerk-react'
 export default function LandingPage() {
+  const { isSignedIn, user, isLoaded } = useUser()
   return (
     <div className="flex flex-col min-h-screen">
+      <Navbar/>
       <main className="flex-1">
-        <section className="w-full pt-12 md:pt-20">
+        <section className="w-full md:pt-20">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="text-center">
               <div className="overflow-hidden w-full">
                 <MacbookScroll
                   title={
                     <>
-                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl/none text-black dark:text-white">
+                      <div className="-mt-24 text-3xl sm:text-4xl md:mt-0 md:text-5xl lg:text-6xl/none text-black dark:text-white">
                         A powerful platform for <span className="text-primary">PDF annotation, collaboration, and AI-driven insights</span>
                       </div>
                     </>
@@ -45,11 +49,11 @@ export default function LandingPage() {
                 <FileStack size={64} className="text-accent"/>
               </div>
               <div>
-                <h1 className="text-3xl font-bold"> Multiple PDF Files Support</h1>
-                <p>Create multiple folders that can contain multiple pdf files</p>
+                <h1 className="text-3xl font-bold mb-5"> Organize with 'Books'</h1>
+                <p className="max-w-[500px]">Start by creating a ‘Book’. Enter a title and description, and let the AI recommend articles from Google Scholar and blogs to jumpstart your collection.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5">
+            <div className="bg-[#5C5C5C] p-5 self-start">
               <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
@@ -59,12 +63,12 @@ export default function LandingPage() {
                 <PenTool size={64} className="text-accent"/>
               </div>
               <div>
-                <h1 className="text-3xl font-bold"> Annotate and Comment</h1>
-                <p>Free to write over the pdf and make your own comments on it.</p>
+                <h1 className="text-3xl font-bold mb-5">Engage with PDFs</h1>
+                <p className="max-w-[500px]">Upload PDFs based on AI suggestions, and make them your own by highlighting, adding notes, and commenting directly on the documents.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5">
-              <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+            <div className="bg-[#5C5C5C] p-5 self-start">
+              <Image src="/pdf1.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
           <div className="flex justify-center items-center py-5 gap-5">
@@ -73,23 +77,23 @@ export default function LandingPage() {
               <Bot size={64} className="text-accent" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">AI Summaries and PDF Generation</h1>
-                <p>Free to write over the pdf and make your own comments on it.</p>
+                <h1 className="text-3xl font-bold mb-5">AI-Genearted Summaries</h1>
+                <p className="max-w-[500px]">Automatically receive summaries and key insights from your PDFs, helping you understand and manage your documents more effectively.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5">
-              <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+            <div className="bg-[#5C5C5C] p-5 self-start">
+              <Image src="/pdf2.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
         </section>
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="features" className="w-full min-h-[800px] py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             {/* how it works and then next section is key features maybe no about section as well and add footer */}
             <h2 className="text-center text-3xl sm:text-4xl md:text-5xl mb-12">Key Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <BgGradientSection title={'Interactive Pdf Viewer'} content={'Highlight, annotate, and comment on your PDFs with ease.'} img={'FileText'}/>
               <BgGradientSection title={'AI-Powered Summarization'} content={'Get quick insights with AI-generated summaries of your documents.'} img={'Brain'}/>
-              <BgGradientSection title={'Batch PDF Upload'} content={'Easily upload and organize multiple PDFs at once, streamlining your document management.'} img={'Folder'}/>
+              <BgGradientSection title={'Batch PDF Collection'} content={'Quickly upload and organize PDFs into your Books for easy access and AI insights.'} img={'Folder'}/>
             </div>
           </div>
         </section>
@@ -111,7 +115,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Basic PDF viewing
+                    Basic PDF viewing and annotation
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -123,7 +127,19 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Limited storage
+                    Basic AI Summarization
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    1 Book Limit
                   </li>
                 </ul>
                 <Button className="mt-auto font-bold">Sign Up</Button>
@@ -142,7 +158,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Basic PDF viewing
+                    Basic PDF viewing and annotation
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -154,7 +170,31 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Limited storage
+                    Advanced AI Summarization
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    3 Book Limit
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    AI Suggestions and links to articles
                   </li>
                 </ul>
                 <Button className="mt-auto font-bold">Choose Basic</Button>
@@ -163,7 +203,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold mb-4">Pro</h3>
                 <p className="text-4xl font-bold mb-6">$9.99<span className="text-base font-normal">/month</span></p>
                 <ul className="mb-6 space-y-2">
-                  <li className="flex items-center">
+                <li className="flex items-center">
                     <svg
                       className="w-4 h-4 mr-2 text-green-500"
                       fill="none"
@@ -173,7 +213,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Full PDF annotation
+                    Basic PDF viewing and annotation
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -185,7 +225,7 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    AI summarization
+                    Advanced AI Summarization
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -197,7 +237,31 @@ export default function LandingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Unlimited storage
+                    10 Book Limit
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    AI Suggestions and links to articles
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-2 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Youtube videos
                   </li>
                 </ul>
                 <Button className="mt-auto font-bold">Choose Pro</Button>
@@ -209,17 +273,26 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">Gnovistar Waitlist</h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground text-center mb-12">
-              Gnovistar is a powerful document management app that allows users to annotate, take notes, and collaborate on PDFs, while leveraging AI to generate summaries and key insights, making it the ultimate tool for enhancing productivity and document workflow.
+              Be the first to experience Gnovistar, the ultimate document management app designed for seamless PDF annotation, note-taking, and AI-driven insights. Join our waitlist today to get early access and stay ahead with exclusive features that will enhance your productivity and streamline your document workflow.
             </p>
             <div className="flex justify-center">
-              <form>
-                <div className="flex gap-5">
-                  <Input className="w-96" placeholder="Email here"/>
-                  <Button className="font-bold" type="submit">
-                    Sign Up
-                  </Button>
-                </div>
-              </form>
+              <div className="flex gap-5">
+                {isSignedIn ? (
+                  <>
+                    <p className="text-2xl border-2 p-5 bg-secondary rounded">You are already on the waitlist!</p>
+                  </>
+                ) : (
+                  <>
+                    <SignedOut>
+                      <SignInButton>
+                        <Button className="font-bold">
+                          Sign up now
+                        </Button>
+                      </SignInButton>
+                    </SignedOut>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </section>
