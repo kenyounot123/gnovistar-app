@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/react"
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
@@ -14,7 +14,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "GnoVistar",
-  description: "Your AI-Powered Knowledge Hub. Organize, analyze, and synthesize information with ease. ",
+  description: "A Note-Taking App with Advanced PDF Handling & AI-Powered Features",
 };
 
 export default function RootLayout({
@@ -33,6 +33,7 @@ export default function RootLayout({
               disableTransitionOnChange
               >
               {children}
+              <Analytics/>
             </ThemeProvider>
         </body>
       </html>
