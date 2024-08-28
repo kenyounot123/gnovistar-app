@@ -70,10 +70,17 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
+export const SidebarBody = ({
+  locked,
+  setLocked,
+  ...props
+}: React.ComponentProps<typeof motion.div> & {
+  locked: boolean;
+  setLocked: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   return (
     <>
-      <DesktopSidebar {...props} />
+      <DesktopSidebar locked={locked} setLocked={setLocked} {...props} />
       <MobileSidebar {...(props as React.ComponentProps<"div">)} />
     </>
   );
@@ -82,8 +89,13 @@ export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
 export const DesktopSidebar = ({
   className,
   children,
+  locked,
+  setLocked,
   ...props
-}: React.ComponentProps<typeof motion.div>) => {
+}: React.ComponentProps<typeof motion.div> &  {
+  locked: boolean;
+  setLocked: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { open, setOpen, animate } = useSidebar();
   return (
     <>
@@ -95,8 +107,8 @@ export const DesktopSidebar = ({
         animate={{
           width: animate ? (open ? "300px" : "60px") : "300px",
         }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onMouseEnter={() => !locked && setOpen(true)}
+        onMouseLeave={() => !locked && setOpen(false)}
         {...props}
       >
         {children}

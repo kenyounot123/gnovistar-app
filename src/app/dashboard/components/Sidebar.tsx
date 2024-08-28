@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, ArrowRightFromLine, ArrowLeftFromLine } from "lucide-react";
 import { useUser, SignedIn, UserButton  } from "@clerk/nextjs";
 
 interface SideBarProps {
@@ -51,6 +51,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
     // },
   ];
   const [open, setOpen] = useState(false);
+  const [locked, setLocked] = useState(false)
   return (
     <div
       className={cn(
@@ -59,9 +60,15 @@ export function GnovistarSidebar({children}:SideBarProps) {
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
+        <SidebarBody locked={locked} setLocked={setLocked} className="justify-between gap-10">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            {open ? <Logo /> : <LogoIcon />}
+            {open ? (
+              <div className="flex justify-between">
+                <Logo />
+                <Button title={locked ? "Unlock Sidebar" : "Lock Sidebar"} variant="outline" onClick={() => setLocked(!locked)}>{locked ? <ArrowLeftFromLine/> : <ArrowRightFromLine />}</Button>
+              </div>
+            )
+              : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
               {open && <Link href="/dashboard/new-book">
                 <Button className="w-full mb-4">
@@ -92,14 +99,13 @@ export const Logo = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-      <motion.span
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-medium text-black dark:text-white whitespace-pre"
+        className="font-medium text-black dark:text-white whitespace-pre w-min"
       >
         Gnovistar
-      </motion.span>
+      </motion.div>
     </Link>
   );
 };
