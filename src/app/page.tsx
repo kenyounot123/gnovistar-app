@@ -282,7 +282,7 @@ export default function LandingPage() {
                     <p className="text-2xl border-2 p-5 bg-secondary rounded">You are already on the waitlist!</p>
                   </>
                 ) : (
-                  <>
+                  <div>
                     <SignedOut>
                       <SignInButton>
                         <Button className="font-bold">
@@ -290,7 +290,7 @@ export default function LandingPage() {
                         </Button>
                       </SignInButton>
                     </SignedOut>
-                  </>
+                  </div>
                 )}
               </div>
             </div>
