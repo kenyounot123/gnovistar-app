@@ -68,7 +68,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="bg-[#5C5C5C] p-5 self-start">
-              <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+              <Image src="/pdf1.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
           <div className="flex justify-center items-center py-5 gap-5">
@@ -82,7 +82,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="bg-[#5C5C5C] p-5 self-start">
-              <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+              <Image src="/pdf2.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
         </section>
@@ -273,7 +273,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl sm:text-4xl md:text-5xl text-center mb-12">Gnovistar Waitlist</h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground text-center mb-12">
-              Gnovistar is a powerful document management app that allows users to annotate, take notes, and collaborate on PDFs, while leveraging AI to generate summaries and key insights, making it the ultimate tool for enhancing productivity and document workflow.
+              Be the first to experience Gnovistar, the ultimate document management app designed for seamless PDF annotation, note-taking, and AI-driven insights. Join our waitlist today to get early access and stay ahead with exclusive features that will enhance your productivity and streamline your document workflow.
             </p>
             <div className="flex justify-center">
               <div className="flex gap-5">
