@@ -77,7 +77,7 @@ export default function LandingPage() {
               <Bot size={64} className="text-accent" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold mb-5">AI-Genearted Summaries</h1>
+                <h1 className="text-3xl font-bold mb-5">AI-Generated Summaries</h1>
                 <p className="max-w-[500px]">Automatically receive summaries and key insights from your PDFs, helping you understand and manage your documents more effectively.</p>
               </div>
             </div>
@@ -279,7 +279,7 @@ export default function LandingPage() {
               <div className="flex gap-5">
                 {isSignedIn ? (
                   <>
-                    <p className="text-2xl border-2 p-5 bg-secondary rounded">You are already on the waitlist!</p>
+                    <p className="text-2xl border-2 p-5 bg-secondary rounded">You are already on the waitlist</p>
                   </>
                 ) : (
                   <div>
