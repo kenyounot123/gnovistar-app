@@ -139,7 +139,7 @@ export default function NewBookForm() {
             <Select 
               required
               value={purpose}
-              onValueChange={(value) => setPurpose(value as string)}
+              onValueChange={(value: string) => setPurpose(value as string)}
             >
               <SelectTrigger className="w-full border-0">
                 <SelectValue placeholder="Purpose" />
