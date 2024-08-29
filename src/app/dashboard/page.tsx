@@ -4,6 +4,12 @@ import { BookOpen, FileText, Plus } from "lucide-react"
 import Link from "next/link"
 import { GnovistarSidebar } from "./components/Sidebar"
 
+const dummyBookData = {
+  bookTitle: "Topology",
+  bookDescription: "math is very fun and its so cool oh my god.",
+  bookPurpose:"Education",
+}
+
 export default function Dashboard() {
   return (
     <>
@@ -18,9 +24,10 @@ export default function Dashboard() {
               {/* PDF Card */}
               <div className="p-4 rounded shadow dark:bg-neutral-800">
                 <FileText className="h-8 w-8 mb-2" />
-                <h3 className="text-lg font-semibold mb-2">Sample PDF</h3>
-                <p className="text-sm text-gray-400 mb-4">Last edited: 2 days ago</p>
-                <Button variant="outline" className="border-0  w-full">Open PDF</Button>
+                <h3 className="text-xl font-semibold">{dummyBookData.bookTitle}</h3>
+                <p className="text-sm mb-4">{dummyBookData.bookPurpose}</p>
+                <p className="text-sm text-gray-400 mb-4">{dummyBookData.bookDescription}</p>
+                <Button variant="outline" className="border-0  w-full">Open Book</Button>
               </div>
               {/* Add more cards for other PDFs or notes */}
             </div>
