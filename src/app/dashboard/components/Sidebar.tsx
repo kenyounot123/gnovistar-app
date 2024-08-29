@@ -65,7 +65,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
             {open ? (
               <div className="flex justify-between">
                 <Logo />
-                <Button title={locked ? "Unlock Sidebar" : "Lock Sidebar"} variant="outline" onClick={() => setLocked(!locked)}>{locked ? <ArrowLeftFromLine/> : <ArrowRightFromLine />}</Button>
+                <Button className="border-0" title={locked ? "Unlock Sidebar" : "Lock Sidebar"} variant="outline" onClick={() => setLocked(!locked)}>{locked ? <ArrowLeftFromLine/> : <ArrowRightFromLine />}</Button>
               </div>
             )
               : <LogoIcon />}

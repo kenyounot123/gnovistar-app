@@ -2,9 +2,20 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Select, MenuItem, FormControl, InputLabel, TextareaAutosize, FormHelperText } from "@mui/material";
+// import { Select, MenuItem, FormControl, InputLabel, TextareaAutosize, FormHelperText } from "@mui/material";
 import Link from 'next/link';
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { ArrowBigLeft } from 'lucide-react'
 
 export default function NewBookForm() {
   const [bookName, setBookName] = useState<string>("");
@@ -78,11 +89,11 @@ export default function NewBookForm() {
       <div className="flex h-screen items-center justify-center bg-gray-100">
         <div className="w-full max-w-5xl p-10 bg-white shadow-md rounded">
           <h1 className="text-3xl font-bold mb-2 text-center">Yay! Your <span className="text-blue-500">{bookName}</span> book has been created.</h1>
-          <p className="text-center text-gray-600 mb-8">We've filled it with some starter material that you can find useful. Happy learning!</p>
+          <p className="text-center mb-8">We've filled it with some starter material that you can find useful. Happy learning!</p>
           <Link href="/dashboard">
-          <Button className="w-full mt-4">
-            Go to Dashboard
-          </Button>
+            <Button className="w-full mt-4">
+              Go to Dashboard
+            </Button>
           </Link>
         </div>
       </div>
@@ -90,13 +101,16 @@ export default function NewBookForm() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-5xl p-10 bg-white shadow-md rounded" style={{ height: "80%" }}>
+    <div className="flex h-screen items-center justify-center bg-background">
+      <div className="w-[90%] max-w-5xl p-10 bg-neutral-800 shadow-md rounded" style={{ height: "80%" }}>
+        <Link href={"/dashboard"}>
+          <ArrowBigLeft size={48} className="hover:text-primary"/>
+        </Link>
         <h1 className="text-3xl font-bold mb-2 text-center">Create New Book</h1>
-        <p className="text-center text-gray-600 mb-8">A "Book" in GnoVistar is a collection of papers and notes centered on a topic of your choice. Add, interact, scribble and compile all of your study materials within a book with AI by your side. </p>
+        <p className="text-center mb-8">A "Book" in GnoVistar is a collection of papers and notes centered on a topic of your choice. Add, interact, scribble and compile all of your study materials within a book with AI by your side. </p>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="mb-4">
-            <label htmlFor="bookName" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="bookName" className="block text-sm font-medium">
               Book Name
             </label>
             <Input
@@ -105,30 +119,47 @@ export default function NewBookForm() {
               value={bookName}
               onChange={(e) => setBookName(e.target.value)}
               required
-              className="w-full mt-1"
+              className="w-full mt-1 border-0"
               placeholder="Keep it unique. Keep it understandable for the AI."
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="description" className="block text-sm font-medium">
               Description
             </label>
-            <TextareaAutosize
+            <Textarea 
+              placeholder="Enter a detailed description of the topic of your interest. It can greatly help the AI to fetch you the starter kit."
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              minRows={5}
-              className="w-full mt-1 p-2 border border-gray-300 rounded"
-              placeholder="Enter a detailed description of the topic of your interest. It can greatly help the AI to fetch you the starter kit."
-              style={{ resize: "none" }}
+              className="w-full mt-1 p-2 rounded border-0 resize-none"
             />
           </div>
           <div className="mb-4">
-          
-            <FormControl fullWidth>
-              <InputLabel id="purpose-label">Purpose</InputLabel>
+            <Select 
+              required
+              value={purpose}
+              onValueChange={(value) => setPurpose(value as string)}
+            >
+              <SelectTrigger className="w-full border-0">
+                <SelectValue placeholder="Purpose" />
+              </SelectTrigger>
+              <SelectContent className="bg-background border-0">
+                <SelectGroup className="">
+                  <SelectItem value="research">Research</SelectItem>
+                  <SelectItem value="blogging">Blogging</SelectItem>
+                  <SelectItem value="university_level">University Level Study/Exam Prep</SelectItem>
+                  <SelectItem value="high_school_level">High School Level Study/Exam Prep</SelectItem>
+                  <SelectItem value="nothing">No Intended Purpose</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <p className="text-sm mt-2">What purpose does this book serve you?</p>
+            {/* <FormControl fullWidth>
+              <InputLabel sx={{ color: "white" }} id="purpose-label">Purpose</InputLabel>
               <Select
                 labelId="purpose-label"
+                label="Purpose"
                 id="purpose"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value as string)}
@@ -141,9 +172,9 @@ export default function NewBookForm() {
                 <MenuItem value="nothing">No Intended Purpose</MenuItem>
               </Select>
               <FormHelperText>What purpose does this book serve you?</FormHelperText>
-            </FormControl>
+            </FormControl> */}
           </div>
-          <Button type="submit" className="w-full mt-4 flex items-center justify-center relative" disabled={loading}>
+          <Button type="submit" className="w-full mt-4 flex items-center justify-center relative font-bold text-xl" disabled={loading}>
             {loading ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-6 h-6 border-4 border-t-4 border-gray-200 border-solid rounded-full animate-spin border-t-blue-500"></div>
