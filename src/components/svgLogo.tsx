@@ -6,15 +6,17 @@ interface SvgLogoProps {
   color: HexColor;
   width: width;
   height: height;
+  className?: string;
 }
 
-const SvgLogo = ({width, height, color}:SvgLogoProps) => (
+const SvgLogo = ({width, height, color, className}:SvgLogoProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={`${width}.000000pt`}
     height={`${height}.000000pt`}
     viewBox="0 0 50.000000 50.000000"
     preserveAspectRatio="xMidYMid meet"
+    className={className}
   >
     <g
       transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)"

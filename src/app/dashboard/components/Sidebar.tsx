@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRightFromLine, ArrowLeftFromLine } from "lucide-react";
 import { useUser, SignedIn, UserButton  } from "@clerk/nextjs";
-import SvgLogo from "./svgLogo";
+import SvgLogo from "@/components/svgLogo";
 
 interface SideBarProps {
   children: ReactNode
