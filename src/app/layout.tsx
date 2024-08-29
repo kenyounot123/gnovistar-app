@@ -24,12 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html className="scroll-smooth" lang="en">
-        <body className={poppins.className}>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${poppins.className} scroll-smooth`}>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
-              enableSystem
+              enableSystem={false}
               disableTransitionOnChange
               >
               {children}

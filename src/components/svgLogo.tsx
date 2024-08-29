@@ -3,7 +3,7 @@ type HexColor = `${string}${string}${string}${string}${string}${string}`;
 type width = `${number}${number}`
 type height = `${number}${number}`
 interface SvgLogoProps {
-  color: HexColor;
+  color?: HexColor;
   width: width;
   height: height;
   className?: string;

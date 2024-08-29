@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import { ModeToggle } from "@/components/modeToggle";
@@ -6,9 +7,18 @@ import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"; 
 import { useTheme } from "next-themes"
 import SvgLogo from "./svgLogo";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState<boolean>(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link className="flex items-center justify-center" href="/">
@@ -23,7 +33,7 @@ export default function Navbar() {
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="#pricing">
             Pricing
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#about">
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
             About
           </Link>
           <SignedOut>
