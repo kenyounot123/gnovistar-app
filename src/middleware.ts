@@ -1,7 +1,7 @@
 import { ClerkMiddlewareAuth, clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/api(.*)'])
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/api(.*)','/api/webhooks(.*)'])
 
 type UserMetadata = {
   isBetaUser?: boolean
@@ -10,7 +10,6 @@ type UserMetadata = {
 export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {
     auth().protect()
-
     const { sessionClaims } = auth()
     const { isBetaUser } = sessionClaims?.metadata as UserMetadata
     if (!isBetaUser) {
