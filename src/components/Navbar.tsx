@@ -5,13 +5,14 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"; 
 import { useTheme } from "next-themes"
+import SvgLogo from "./svgLogo";
 
 export default function Navbar() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link className="flex items-center justify-center" href="/">
-        <BookOpen className="h-6 w-6 mr-2" />
+        <SvgLogo width="32" height="32" color={`${theme === 'dark' ? 'FFFFFF' : '000000'}`}/>
         <span className="font-bold text-lg">Gnovistar</span>
       </Link>
       <nav className="ml-auto flex items-center">
