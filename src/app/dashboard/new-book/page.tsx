@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/select"
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 import { ArrowBigLeft } from 'lucide-react'
+import { doc, collection, updateDoc, setDoc, getDoc, arrayUnion } from "firebase/firestore"; 
+import { db } from "@/firebase";
+import { useAuth } from "@clerk/nextjs";
 
 export default function NewBookForm() {
   const [bookName, setBookName] = useState<string>("");
@@ -24,19 +27,44 @@ export default function NewBookForm() {
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { userId } = useAuth();
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setLoading(true);
-    await fetchGeminiData(bookName, description, purpose);
 
-    
-    console.log(`Book: ${bookName}, Purpose: ${purpose}, Description: ${description}`);
+    try {
+      if (!userId) {
+        console.error("User is not authenticated");
+        return;
+      }
+      const userDocRef = doc(db, "users", userId); 
+      await updateDoc(userDocRef, {
+        books: arrayUnion(bookName)
+      }); 
+      const bookCollectionRef = collection(userDocRef, bookName);
+      const initDocRef = doc(bookCollectionRef, 'init');
 
-    setConfirmation(true);
-    setLoading(true);
-  };
+      
+      await setDoc(initDocRef, {
+        description: description,
+        purpose: purpose,
+      });
+
+      await fetchGeminiData(bookName, description, purpose);
+      
+      console.log(`Book: ${bookName}, Purpose: ${purpose}, Description: ${description}`);
+
+      setConfirmation(true);
+    } catch (error) {
+      console.error("Error creating book or updating Firestore:", error);
+      // Handle error as needed
+    } finally {
+      setLoading(false);
+    }
+  }; 
 
   const generateGeminiPrompt = (bookName: string, description: string, purpose: string) => {
     
@@ -87,7 +115,7 @@ export default function NewBookForm() {
   if (confirmation) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-100">
-        <div className="w-full max-w-5xl p-10 bg-white shadow-md rounded">
+        <div className="w-full max-w-5xl p-10 bg-black shadow-md rounded">
           <h1 className="text-3xl font-bold mb-2 text-center">Yay! Your <span className="text-blue-500">{bookName}</span> book has been created.</h1>
           <p className="text-center mb-8">We've filled it with some starter material that you can find useful. Happy learning!</p>
           <Link href="/dashboard">
