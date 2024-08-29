@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRightFromLine, ArrowLeftFromLine } from "lucide-react";
 import { useUser, SignedIn, UserButton  } from "@clerk/nextjs";
+import SvgLogo from "./svgLogo";
 
 interface SideBarProps {
   children: ReactNode
@@ -35,13 +36,13 @@ export function GnovistarSidebar({children}:SideBarProps) {
     //     <IconUserBolt className="text-primary h-5 w-5 flex-shrink-0" />
     //   ),
     // },
-    // {
-    //   label: "Settings",
-    //   href: "#",
-    //   icon: (
-    //     <IconSettings className="text-primary h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
+    {
+      label: "Settings",
+      href: "#",
+      icon: (
+        <IconSettings className="text-primary h-5 w-5 flex-shrink-0" />
+      ),
+    },
     // {
     //   label: "Logout",
     //   href: "#",
@@ -65,7 +66,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
             {open ? (
               <div className="flex justify-between">
                 <Logo />
-                <Button className="border-0" title={locked ? "Unlock Sidebar" : "Lock Sidebar"} variant="outline" onClick={() => setLocked(!locked)}>{locked ? <ArrowLeftFromLine/> : <ArrowRightFromLine />}</Button>
+                <Button className={`border-0 hover:bg-primary`} title={locked ? "Unlock Sidebar" : "Lock Sidebar"} variant="outline" onClick={() => setLocked(!locked)}>{locked ? <ArrowLeftFromLine/> : <ArrowRightFromLine />}</Button>
               </div>
             )
               : <LogoIcon />}
@@ -99,6 +100,7 @@ export const Logo = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
+      <SvgLogo color="ffffff" width="32" height="32" />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -115,8 +117,8 @@ export const LogoIcon = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <SvgLogo color="ffffff" width="32" height="32" />
     </Link>
-  );
+  )
 };
 
