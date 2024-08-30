@@ -24,9 +24,6 @@ export default function Navbar() {
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="#pricing">
             Pricing
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            About
-          </Link>
           <SignedOut>
             <SignInButton>
               <Button className="font-bold">Sign In</Button>

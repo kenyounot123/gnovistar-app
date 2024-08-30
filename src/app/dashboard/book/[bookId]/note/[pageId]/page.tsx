@@ -6,7 +6,8 @@ import { useState } from "react"
 
 export default function NotePage({ params }: { params: { pageId: string } }) {
   // This is going to be an editable page
-  // done using html contenteditable which allows us to edit the input of html elements
+  // Fetches notes from the database and render it out in TipTap editor as content
+  // If no notes in the database then just render out a default tip tap editor
   const router = useRouter()
 
   const handleBackClick = () => {
