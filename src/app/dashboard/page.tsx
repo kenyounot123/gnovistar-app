@@ -34,7 +34,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="mb-4">
-        <Input type="text" placeholder="Search your notes..." className="w-full border-0 dark:bg-neutral-800" />
+        <Input type="text" placeholder="Search your notes..." className="w-full bg-neutral-100 border-0 dark:bg-neutral-800" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {dummyBookData.map((book) => (
@@ -44,7 +44,7 @@ export default function Dashboard() {
             <p className="text-sm mb-4">{book.bookPurpose}</p>
             <p className="text-sm text-gray-400 mb-4">{book.bookDescription}</p>
             <Link href={`/dashboard/book/${book.bookId}`}>
-              <Button variant="outline" className="border-0  w-full">Open Book</Button>
+              <Button variant="outline" className="border-0 w-full bg-primary text-white dark:text-black">Open Book</Button>
             </Link>
           </div>
         ))}

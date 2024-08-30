@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink, SideUserButton } from "@/components/ui/sidebar";
+import { Sidebar, SidebarBody, SidebarLink, SideButton, SideDarkMode } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -12,15 +12,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowRightFromLine, ArrowLeftFromLine } from "lucide-react";
+import { Plus, ArrowRightFromLine, ArrowLeftFromLine, Sun, Moon } from "lucide-react";
 import { useUser, SignedIn, UserButton  } from "@clerk/nextjs";
 import SvgLogo from "@/components/svgLogo";
+import { useTheme } from "next-themes";
 
 interface SideBarProps {
   children: ReactNode
 }
 export function GnovistarSidebar({children}:SideBarProps) {
   const { isSignedIn, isLoaded, user } = useUser()
+  const { theme, setTheme } = useTheme()
   const links = [
     {
       label: "Dashboard",
@@ -44,7 +46,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
       ),
     },
     // {
-    //   label: "Logout",
+    //   label: "Dark Mode",
     //   href: "#",
     //   icon: (
     //     <IconArrowLeft className="text-primary h-5 w-5 flex-shrink-0" />
@@ -68,7 +70,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
                 <Logo />
                 <div className="hidden md:block">
                   <Button
-                    className="border-0 hover:bg-primary"
+                    className="border-0 hover:bg-slate-500 bg-transparent"
                     title={locked ? "Unlock Sidebar" : "Lock Sidebar"}
                     variant="outline"
                     onClick={() => setLocked(!locked)}
@@ -88,14 +90,15 @@ export function GnovistarSidebar({children}:SideBarProps) {
               {links.map((link, idx) => (
                 <SidebarLink className="text-primary" key={idx} link={link} />
               ))}
+              <SideDarkMode theme={theme} setTheme={setTheme}/>
             </div>
           </div>
           <div>
-            <SideUserButton user={
+            <SideButton button={
               <SignedIn>
                 <UserButton/>
               </SignedIn>
-            } name={user?.fullName}/>
+            } label={user?.fullName}/>
           </div>
         </SidebarBody>
       </Sidebar>
@@ -109,7 +112,7 @@ export const Logo = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <SvgLogo color="ffffff" width="32" height="32" />
+      <SvgLogo color="66CCCC" width="32" height="32" />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -126,7 +129,7 @@ export const LogoIcon = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <SvgLogo color="ffffff" width="32" height="32" />
+      <SvgLogo color="66CCCC" width="32" height="32" />
     </Link>
   )
 };
