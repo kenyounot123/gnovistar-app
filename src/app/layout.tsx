@@ -24,8 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html lang="en" suppressHydrationWarning>
-        <body className={`${poppins.className} scroll-smooth`}>
+      <html lang="en" className="scroll-smooth">
+        <body className={`${poppins.className} `}>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"

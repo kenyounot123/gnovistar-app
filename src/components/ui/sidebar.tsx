@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
+import {Sun, Moon} from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
@@ -200,13 +201,13 @@ export const SidebarLink = ({
     </Link>
   );
 };
-export const SideUserButton = ({
-  user,
-  name,
+export const SideButton = ({
+  button,
+  label,
   className,
 }: {
-  user: React.ReactNode;
-  name?: string | null
+  button: React.ReactNode;
+  label?: string | null
   className?: string;
 }) => {
   const { open, animate } = useSidebar();
@@ -217,7 +218,7 @@ export const SideUserButton = ({
         className
       )}
     >
-      {user}
+      {button}
 
       <motion.span
         animate={{
@@ -226,7 +227,52 @@ export const SideUserButton = ({
         }}
         className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
       >
-        {name ? name : 'John Doe'}
+        {label}
+      </motion.span>
+    </div>
+  );
+};
+interface SideDarkModeProps {
+  theme: string | undefined;
+  setTheme: (theme: string) => void;
+  className?: string;
+}
+
+export const SideDarkMode = ({
+  theme,
+  setTheme,
+  className,
+}: SideDarkModeProps) => {
+  const { open, animate } = useSidebar(); // Assuming useSidebar is a hook for managing sidebar state
+
+  const isDarkMode = theme === 'dark';
+  const toggleTheme = () => setTheme(isDarkMode ? 'light' : 'dark');
+
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-start gap-2 group/sidebar py-2",
+        className
+      )}
+    >
+      <div onClick={toggleTheme} className="hover:cursor-pointer">
+        {isDarkMode ? (
+          <Sun className="text-primary" />
+        ) : (
+          <Moon className="text-primary" />
+        )}
+      </div>
+
+      <motion.span
+        animate={{
+          display: animate ? (open ? "inline-block" : "none") : "inline-block",
+          opacity: animate ? (open ? 1 : 0) : 1,
+        }}
+        className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+      >
+        <div onClick={toggleTheme} className="hover:cursor-pointer">
+          {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+        </div>
       </motion.span>
     </div>
   );

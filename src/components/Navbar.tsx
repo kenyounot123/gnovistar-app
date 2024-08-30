@@ -1,28 +1,19 @@
-'use client'
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
 import { ModeToggle } from "@/components/modeToggle";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"; 
 import { useTheme } from "next-themes"
 import SvgLogo from "./svgLogo";
-import { useEffect, useState } from "react";
+
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState<boolean>(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
-  if (!mounted) {
-    return null;
-  }
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link className="flex items-center justify-center" href="/">
-        <SvgLogo width="32" height="32" color={`${theme === 'dark' ? 'FFFFFF' : '000000'}`}/>
+        <SvgLogo width="32" height="32" color="66CCCC"/>
         <span className="font-bold text-lg">Gnovistar</span>
       </Link>
       <nav className="ml-auto flex items-center">
