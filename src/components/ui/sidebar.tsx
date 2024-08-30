@@ -257,9 +257,9 @@ export const SideDarkMode = ({
     >
       <div onClick={toggleTheme} className="hover:cursor-pointer">
         {isDarkMode ? (
-          <Sun className="text-primary" />
+          <Sun className="text-primary h-5 w-5 flex-shrink-0" />
         ) : (
-          <Moon className="text-primary" />
+          <Moon className="text-primary h-5 w-5 flex-shrink-0" />
         )}
       </div>
 
