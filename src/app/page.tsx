@@ -10,6 +10,7 @@ import { FileStack, Bot, PenTool, CheckCircle, Facebook, Twitter, Instagram, Git
 import Navbar from "@/components/Navbar"
 import { useUser } from '@clerk/clerk-react'
 import PricingCard from "@/components/PricingCard"
+import { InfiniteMovingCardsDemo } from "@/components/InfiniteMovingCards"
 export default function LandingPage() {
   const { isSignedIn, user, isLoaded } = useUser()
   return (
@@ -45,7 +46,7 @@ export default function LandingPage() {
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="flex justify-center items-center py-5 gap-5">
+          <div className="flex-col md:flex-row flex justify-center items-center py-5 gap-5">
             <div className="self-start flex-col flex gap-10 px-5">
               <div className="p-5 rounded-full w-min bg-primary">
                 <FileStack size={64} className="text-accent"/>
@@ -55,11 +56,14 @@ export default function LandingPage() {
                 <p className="max-w-[500px]">Start by creating a ‘Book’. Enter a title and description, and let the AI recommend articles from Google Scholar and blogs to jumpstart your collection.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5 self-start">
+            <div className="rounded bg-[#5C5C5C] shadow-lg self-start" style={{
+              background:
+                "linear-gradient(180deg, var(--neutral-800), var(--neutral-900)",
+            }}>
               <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
-          <div className="flex justify-center items-center py-5 gap-5 flex-row-reverse">
+          <div className="flex-col md:flex-row flex justify-center items-center py-5 gap-5 md:flex-row-reverse">
             <div className="self-start flex-col flex gap-10 px-5">
               <div className="p-5 rounded-full w-min bg-primary">
                 <PenTool size={64} className="text-accent"/>
@@ -69,11 +73,14 @@ export default function LandingPage() {
                 <p className="max-w-[500px]">Upload PDFs based on AI suggestions, and make them your own by highlighting, adding notes, and commenting directly on the documents.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5 self-start">
+            <div className="rounded bg-[#5C5C5C] shadow-lg self-start" style={{
+              background:
+                "linear-gradient(180deg, var(--neutral-800), var(--neutral-900)",
+            }}>
               <Image src="/pdf1.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
-          <div className="flex justify-center items-center py-5 gap-5">
+          <div className="flex-col md:flex-row flex justify-center items-center py-5 gap-5">
             <div className="self-start flex-col flex gap-10 px-5">
               <div className="p-5 rounded-full w-min bg-primary">
               <Bot size={64} className="text-accent" />
@@ -83,30 +90,22 @@ export default function LandingPage() {
                 <p className="max-w-[500px]">Automatically receive summaries and key insights from your PDFs, helping you understand and manage your documents more effectively.</p>
               </div>
             </div>
-            <div className="bg-[#5C5C5C] p-5 self-start">
+            <div className="shadow-lg rounded bg-[#5C5C5C] self-start"style={{
+              background:
+                "linear-gradient(180deg, var(--neutral-800), var(--neutral-900)",
+            }}>
               <Image src="/pdf2.png" width={500} height={300} alt={"GnoVistar PDF"}/>
             </div>
           </div>
         </section>
-        <section id="features" className="w-full min-h-[800px] py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            {/* how it works and then next section is key features maybe no about section as well and add footer */}
-            <h2 className="text-center text-3xl sm:text-4xl md:text-5xl mb-12">Key Features</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <BgGradientSection title={'Interactive Pdf Viewer'} content={'Highlight, annotate, and comment on your PDFs with ease.'} img={'FileText'}/>
-              <BgGradientSection title={'AI-Powered Summarization'} content={'Get quick insights with AI-generated summaries of your documents.'} img={'Brain'}/>
-              <BgGradientSection title={'Batch PDF Collection'} content={'Quickly upload and organize PDFs into your Books for easy access and AI insights.'} img={'Folder'}/>
-            </div>
-          </div>
-        </section>
-        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
                 Simple Pricing
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Choose the plan that fits your needs. All plans include a 14-day free trial.
+                Choose the plan that fits your needs
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-3 md:gap-8">
@@ -150,13 +149,16 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+        <section className="w-full">
+          <InfiniteMovingCardsDemo/>
+        </section>
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-secondary">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
               Gnovistar Waitlist
             </h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground text-center mb-12">
-              Be the first to experience Gnovistar, the ultimate document management app designed for seamless PDF annotation, note-taking, and AI-driven insights. Join our waitlist today to get early access and stay ahead with exclusive features that will enhance your productivity and streamline your document workflow.
+            Be the first to experience Gnovistar, the ultimate document management app for seamless PDF annotation, note-taking, and AI-driven insights—join our waitlist today for early access to exclusive productivity-enhancing features.
             </p>
             <div className="flex justify-center">
               <div className="flex gap-5">
