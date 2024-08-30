@@ -18,12 +18,9 @@ export default function Navbar() {
       </Link>
       <nav className="ml-auto flex items-center">
         <div className="hidden sm:flex gap-4 sm:gap-6 items-center">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#features">
-            Features
-          </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#pricing">
+          {/* <Link className="text-sm font-medium hover:underline underline-offset-4" href="#pricing">
             Pricing
-          </Link>
+          </Link> */}
           <SignedOut>
             <SignInButton>
               <Button className="font-bold">Sign In</Button>
@@ -43,15 +40,6 @@ export default function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="text-center">
-              <DropdownMenuItem asChild>
-                <Link href="#features">Features</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="#pricing">Pricing</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="#about">About</Link>
-              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 Light Mode
               </DropdownMenuItem>

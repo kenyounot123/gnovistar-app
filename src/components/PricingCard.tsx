@@ -31,7 +31,7 @@ export default function PricingCard({ title, price, description, features, butto
         </ul>
       </CardContent>
       <CardFooter className="mt-auto">
-        <Button className="w-full" variant={highlighted ? "default" : "outline"}>
+        <Button className={`w-full ${highlighted ? 'bg-primary ':'bg-accent'}`} variant={highlighted ? "default" : "outline"}>
           {buttonText}
         </Button>
       </CardFooter>
