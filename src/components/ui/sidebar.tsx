@@ -325,8 +325,8 @@ export const SideBook = ({
           {books.length > 0 ? (
             <ul className="list-none">
               {books.map((book) => (
-                <li key={book.bookId} className="text-sm py-1 px-2 hover:bg-gray-300 dark:hover:bg-gray-700">
-                  {book.bookTitle}
+                <li key={book.id} className="text-sm py-1 px-2 hover:bg-gray-300 dark:hover:bg-gray-700">
+                  {book.title}
                 </li>
               ))}
             </ul>

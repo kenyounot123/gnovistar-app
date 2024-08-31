@@ -1,15 +1,15 @@
 export interface Book {
-  bookId: string,
-  bookTitle: string,
-  bookDescription: string,
-  bookPurpose: string,
-  bookPages: BookPage[]
+  id: string,
+  title: string,
+  description: string,
+  purpose: string,
+  pages: BookPage[]
 }
 export type PageType = "notes" | "pdf";
 
 export interface BookPage {
-  pageId: string,
-  pageType: PageType, // Could be 'video' 'pdf' or 'notes' for now 
-  pageImg?: string, // thumbnail img ?
-  pageContent?: string // idk 
+  id: string,
+  type: PageType, // Could be 'video' 'pdf' or 'notes' for now 
+  img?: string, // thumbnail img ?
+  content?: string // idk 
 }

@@ -23,25 +23,25 @@ interface SideBarProps {
 }
 const dummyBookData = [
   {
-    bookId: "randomString1",
-    bookTitle: "Topology",
-    bookDescription: "Math is very fun and it's so cool, oh my god.",
-    bookPurpose: "Education",
-    bookPages: [],
+    id: "randomString1",
+    title: "Topology",
+    description: "Math is very fun and it's so cool, oh my god.",
+    purpose: "Education",
+    pages: [],
   },
   {
-    bookId: "randomString2",
-    bookTitle: "Algebra",
-    bookDescription: "An interesting journey into abstract structures.",
-    bookPurpose: "Study",
-    bookPages: [],
+    id: "randomString2",
+    title: "Math",
+    description: "Math is very fun and it's so cool, oh my god.",
+    purpose: "Education",
+    pages: [],
   },
   {
-    bookId: "randomString3",
-    bookTitle: "Calculus",
-    bookDescription: "Understanding the change and motion in mathematics.",
-    bookPurpose: "Research",
-    bookPages: [],
+    id: "randomString3",
+    title: "Calculus",
+    description: "Math is very fun and it's so cool, oh my god.",
+    purpose: "Education",
+    pages: [],
   },
 ];
 export function GnovistarSidebar({children}:SideBarProps) {
