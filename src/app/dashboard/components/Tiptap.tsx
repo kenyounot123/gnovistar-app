@@ -75,6 +75,13 @@ const Tiptap = () => {
       },
     },
     immediatelyRender: false,
+    onUpdate: () => {
+      // On update of editor content i can save to database ? 
+    
+      // maybe use debounce to save everytime user stops typing 
+      // then when entering a note book page the content will still be there
+      console.log(editor?.getJSON())
+    }
   })
   if (!editor) {
     return null

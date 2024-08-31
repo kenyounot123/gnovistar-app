@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import type { Book } from '@/types/book';
+import { PageType } from '@/types/book';
+import { BookPage } from '@/types/book';
 
 const dummyBookData = {
   bookId: "randomString1",
@@ -23,21 +26,6 @@ const dummyBookData = {
       pageContent: "" // actual data of what is contained inside the page
     }
   ],
-}
-type PageType = "notes" | "pdf";
-
-interface Book {
-  bookId: string,
-  bookTitle: string,
-  bookDescription: string,
-  bookPurpose: string,
-  bookPages: BookPage[]
-}
-interface BookPage {
-  pageId: string,
-  pageType: PageType, // Could be 'video' 'pdf' or 'notes' for now 
-  pageImg?: string, // thumbnail img ?
-  pageContent?: string // idk 
 }
 export default function Book({ params }: { params: { bookId: string } }) {
   // get the bookPages from current book and save it into state

@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html lang="en" className="scroll-smooth">
+      <html lang="en" className="scroll-smooth" suppressHydrationWarning>
         <body className={`${poppins.className} `}>
             <ThemeProvider
               attribute="class"

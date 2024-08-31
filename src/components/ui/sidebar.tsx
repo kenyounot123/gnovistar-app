@@ -2,9 +2,10 @@
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
-import {Sun, Moon} from "lucide-react"
+import {Sun, Moon, BookOpen} from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
+import { Book } from "@/types/book";
 
 interface Links {
   label: string;
@@ -274,6 +275,68 @@ export const SideDarkMode = ({
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </div>
       </motion.span>
+    </div>
+  );
+};
+export const SideBook = ({
+  books,
+  className,
+}:{
+  books: Book[],
+  className?: string,
+}) => {
+  const { open, animate } = useSidebar(); // Assuming useSidebar is a hook for managing sidebar state
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  return (
+    <div
+      className={cn(
+        "group/sidebar py-2",
+        className
+      )}
+    >
+      <div className="flex items-center justify-start gap-2 ">
+        <div className="hover:cursor-pointer">
+          <BookOpen className="text-primary h-5 w-5 flex-shrink-0" />
+        </div>
+        <motion.span
+          animate={{
+            display: animate ? (open ? "inline-block" : "none") : "inline-block",
+            opacity: animate ? (open ? 1 : 0) : 1,
+          }}
+          className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        >
+          <div className="relative">
+            <div
+              className="cursor-pointer"
+              onClick={handleDropdownToggle}
+            >
+              Books
+            </div>
+          </div>
+        </motion.span>
+      </div>
+      {isDropdownOpen && open &&(
+        <div className="mt-2 w-48">
+          {books.length > 0 ? (
+            <ul className="list-none">
+              {books.map((book) => (
+                <li key={book.bookId} className="text-sm py-1 px-2 hover:bg-gray-300 dark:hover:bg-gray-700">
+                  {book.bookTitle}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="p-2 text-center text-gray-500 dark:text-gray-400">
+              No books available
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

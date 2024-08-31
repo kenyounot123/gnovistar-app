@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink, SideButton, SideDarkMode } from "@/components/ui/sidebar";
+import { Sidebar, SidebarBody, SidebarLink, SideBook, SideButton, SideDarkMode } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -16,10 +16,34 @@ import { Plus, ArrowRightFromLine, ArrowLeftFromLine, Sun, Moon } from "lucide-r
 import { useUser, SignedIn, UserButton  } from "@clerk/nextjs";
 import SvgLogo from "@/components/svgLogo";
 import { useTheme } from "next-themes";
+import { Book } from "@/types/book";
 
 interface SideBarProps {
   children: ReactNode
 }
+const dummyBookData = [
+  {
+    bookId: "randomString1",
+    bookTitle: "Topology",
+    bookDescription: "Math is very fun and it's so cool, oh my god.",
+    bookPurpose: "Education",
+    bookPages: [],
+  },
+  {
+    bookId: "randomString2",
+    bookTitle: "Algebra",
+    bookDescription: "An interesting journey into abstract structures.",
+    bookPurpose: "Study",
+    bookPages: [],
+  },
+  {
+    bookId: "randomString3",
+    bookTitle: "Calculus",
+    bookDescription: "Understanding the change and motion in mathematics.",
+    bookPurpose: "Research",
+    bookPages: [],
+  },
+];
 export function GnovistarSidebar({children}:SideBarProps) {
   const { isSignedIn, isLoaded, user } = useUser()
   const { theme, setTheme } = useTheme()
@@ -81,12 +105,17 @@ export function GnovistarSidebar({children}:SideBarProps) {
               </div>
             )
               : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {open && <Link href="/dashboard/new-book">
-                <Button className="w-full mb-4">
+            {open && 
+              <Link href="/dashboard/new-book">
+                <Button className="w-full my-4">
                   <Plus className="mr-2 h-4 w-4" /> New Book
                 </Button>
-              </Link>}
+              </Link>
+            }
+            <div className="flex flex-col gap-2 mt-5">
+              <SideBook books={dummyBookData}/>
+            </div>
+            <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
                 <SidebarLink className="text-primary" key={idx} link={link} />
               ))}
