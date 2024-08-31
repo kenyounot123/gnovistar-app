@@ -75,3 +75,19 @@ export const createPage = async (bookId:Book["id"], pageType: BookPage["type"]) 
     throw new Error("Failed to create the page.");
   }
 }
+export const getPages = async (bookId:Book["id"]) => {
+  // const { userId } = auth()
+  if (!userId) {
+    throw new Error('You must be signed in!')
+  }
+  const bookRef = collection(db, `users/${userId}/books/${bookId}/pages`)
+
+  const querySnapshot = await getDocs(bookRef);
+  const pages:BookPage[] = [] 
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.data())
+    pages.push(doc.data() as BookPage);
+  });
+  return pages
+}
