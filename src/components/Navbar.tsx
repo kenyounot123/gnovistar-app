@@ -39,7 +39,7 @@ export default function Navbar() {
                 Menu
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="text-center">
+            <DropdownMenuContent className="text-center bg-neutral-800">
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 Light Mode
               </DropdownMenuItem>

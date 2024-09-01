@@ -191,35 +191,12 @@ export default function LandingPage() {
           <div className="flex-1 space-y-4">
             <h2 className="text-xl font-semibold">Gnovistar</h2>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Empowering document management with AI-driven insights and seamless collaboration.
+              Empowering PDF management with AI-driven insights.
             </p>
-          </div>
-          <div className="flex-1 space-y-4">
-            <h3 className="text-sm font-medium">Stay Updated</h3>
-            <form className="flex space-x-2">
-              <Input
-                className="max-w-lg flex-1"
-                placeholder="Enter your email"
-                type="email"
-              />
-              <Button type="submit">Subscribe</Button>
-            </form>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row justify-between items-center md:flex-col md:items-end md:justify-start">
             <div className="flex gap-4 text-muted-foreground">
-              <Link className="hover:text-foreground transition-colors" href="#">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link className="hover:text-foreground transition-colors" href="#">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link className="hover:text-foreground transition-colors" href="#">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </Link>
-              <Link className="hover:text-foreground transition-colors" href="#">
+              <Link className="hover:text-foreground transition-colors" href="https://github.com/kenyounot123/gnovistar-app">
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </Link>
