@@ -44,14 +44,6 @@ export default function NewBookForm() {
       await updateDoc(userDocRef, {
         books: arrayUnion(bookName)
       }); 
-      const bookCollectionRef = collection(userDocRef, bookName);
-      const initDocRef = doc(bookCollectionRef, 'init');
-
-      
-      await setDoc(initDocRef, {
-        description: description,
-        purpose: purpose,
-      });
 
       await fetchGeminiData(bookName, description, purpose);
       
@@ -93,24 +85,63 @@ export default function NewBookForm() {
 
   const fetchGeminiData = async (bookName: string, description: string, purpose: string) => {
     const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY; // Replace with your actual API key
-
+  
     // Generate the prompt based on user input
     const prompt = generateGeminiPrompt(bookName, description, purpose);
-
+  
     const genAI = new GoogleGenerativeAI(geminiApiKey);
-
-    const model = genAI.getGenerativeModel(
-      { model: "gemini-1.5-flash",
+  
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
       generationConfig: { responseMimeType: "application/json" }
-      });
-
-    
+    });
+  
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const starter = response.text();
-    console.log(starter);
+    const starter = await response.text();
     
+    // Parse the response JSON
+    const data = JSON.parse(starter);
+
+    if (!userId) {
+      console.error("User is not authenticated");
+      return;
+    }
+    const userDocRef = doc(db, "users", userId); 
+    const bookCollectionRef = collection(userDocRef, bookName);
+      const initDocRef = doc(bookCollectionRef, 'init');
+
+      
+      await setDoc(initDocRef, {
+        description: description,
+        purpose: purpose,
+        embeds: {}
+      });
+  
+    
+    
+    data.materials.forEach(async (material: { name: string; link: string }) => {
+      if (!material.link.includes("youtube.com")) {
+        // Skip YouTube videos
+        const materialDocRef = doc(bookCollectionRef, material.name);
+        await setDoc(materialDocRef, {
+          name: material.name,
+          link: material.link
+        });
+      } else {
+        const videoEmbed = {
+          title: material.name,
+          link: material.link
+        };
+        await updateDoc(initDocRef, {
+          embeds: arrayUnion(videoEmbed)
+        });
+      }
+    });
+    
+    console.log('Starter materials added to Firestore.');
   };
+  
 
   if (confirmation) {
     return (
