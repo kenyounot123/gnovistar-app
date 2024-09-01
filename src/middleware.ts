@@ -8,7 +8,7 @@ type UserMetadata = {
 }
 
 export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) {
+  if (isProtectedRoute(req) && !req.url.includes('/api/webhooks/')) {
     auth().protect()
     const { sessionClaims } = auth()
     const { isBetaUser } = sessionClaims?.metadata as UserMetadata
