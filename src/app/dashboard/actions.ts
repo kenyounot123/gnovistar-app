@@ -1,7 +1,7 @@
 'use server'
 
 import { Book, BookPage } from "@/types/book"
-import { doc, getDocs, collection, addDoc, getDoc } from "firebase/firestore";
+import { doc, getDocs, collection, addDoc, getDoc, setDoc, arrayUnion, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { auth } from '@clerk/nextjs/server'
 
@@ -51,43 +51,48 @@ export const createNotes = async (
     throw new Error("Error creating note");
   }
 };
-export const createPage = async (bookId:Book["id"], pageType: BookPage["type"]) => {
-  // const { userId } = auth()
-  if (!userId) {
-    throw new Error('You must be signed in!')
-  }
-  const bookRef = collection(db, `users/${userId}/books/${bookId}/pages`)
 
-  const newPage = {
-    type: pageType
-  }
-  const docRef = await addDoc(bookRef, {
-    type: pageType,
-  })
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return {
-      id: docSnap.id,
-      type: pageType, 
-      ...docSnap.data(), 
-    } as BookPage;
-  } else {
-    throw new Error("Failed to create the page.");
-  }
-}
-export const getPages = async (bookId:Book["id"]) => {
-  // const { userId } = auth()
-  if (!userId) {
-    throw new Error('You must be signed in!')
-  }
-  const bookRef = collection(db, `users/${userId}/books/${bookId}/pages`)
 
-  const querySnapshot = await getDocs(bookRef);
-  const pages:BookPage[] = [] 
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.data())
-    pages.push(doc.data() as BookPage);
+export const getPages = async (bookId: Book['id']) => {
+  // const { userId } = auth();
+  if (!userId) {
+    throw new Error('You must be signed in!');
+  }
+
+  const bookRef = doc(db, `users/${userId}/books/${bookId}`);
+  const bookDoc = await getDoc(bookRef);
+
+  if (!bookDoc.exists()) {
+    throw new Error('Book does not exist!');
+  }
+
+  const bookData = bookDoc.data();
+  
+  if (!bookData?.pages) {
+    throw new Error('No pages found in this book!');
+  }
+
+  return bookData.pages;
+};
+
+export const createPage = async (bookId: Book['id'], pageContent: BookPage) => {
+  // const { userId } = auth();
+  if (!userId) {
+    throw new Error('You must be signed in!');
+  }
+
+  const bookRef = doc(db, `users/${userId}/books/${bookId}`);
+  const bookDoc = await getDoc(bookRef);
+  
+  if (!bookDoc.exists()) {
+    throw new Error('Book does not exist!');
+  }
+
+  const currentPages = bookDoc.data().pages || [];
+
+  const updatedPages = [...currentPages, pageContent];
+
+  await updateDoc(bookRef, {
+    pages: updatedPages,
   });
-  return pages
-}
+};

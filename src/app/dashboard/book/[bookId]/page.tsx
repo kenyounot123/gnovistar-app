@@ -37,7 +37,7 @@ export default function Book({ params }: { params: { bookId: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const router = useRouter()
   useEffect(() => {
-    const tempBookId = "HrM2CFXvqSerivtko0ro"
+    const tempBookId = "t2kT4B1E4guKlBcUYrRX"
     const fetchPages = async () => {
       try {
         const pages = await getPages(tempBookId);
@@ -69,8 +69,11 @@ export default function Book({ params }: { params: { bookId: string } }) {
   }
   const handleNoteClick = async () => {
     // handle note creation and save to database 
-    const tempBookId = "HrM2CFXvqSerivtko0ro"
-    const newPage = await createPage(tempBookId, 'notes')
+    const tempBookId = "t2kT4B1E4guKlBcUYrRX"
+    const newPage = {
+      type: "notes"
+    } as BookPage;
+    await createPage(tempBookId, newPage)
     setBookPagesData([...bookPagesData, newPage]);
   }
   const handleVideoClick = () => {
