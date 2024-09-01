@@ -13,7 +13,7 @@ export const getNotes = async (bookId: Book["id"], pageId: BookPage["id"]) => {
     throw new Error('You must be signed in!')
   }
   try {
-    const notesRef = collection(db, `users/${userId}/books/${bookId}/pages/${pageId}/notes`);
+    const notesRef = collection(db, `users/${userId}/books/${bookId}/notes/${pageId}`);
     
     const notesSnapshot = await getDocs(notesRef);
     
@@ -38,7 +38,7 @@ export const createNotes = async (
     throw new Error('You must be signed in!')
   }
   try {
-    const notesRef = collection(db, `users/${userId}/books/${bookId}/pages/${pageId}/notes`);
+    const notesRef = collection(db, `users/${userId}/books/${bookId}/notes/${pageId}`);
     
     const docRef = await addDoc(notesRef, {
       content,
@@ -90,7 +90,13 @@ export const createPage = async (bookId: Book['id'], pageContent: BookPage) => {
 
   const currentPages = bookDoc.data().pages || [];
 
-  const updatedPages = [...currentPages, pageContent];
+  // this is solely for id generation
+  const pagesCollectionRef = collection(db, `pages`);
+  const newPageId = doc(pagesCollectionRef).id;
+
+  const newPage = { ...pageContent, id: newPageId };
+
+  const updatedPages = [...currentPages, newPage];
 
   await updateDoc(bookRef, {
     pages: updatedPages,

@@ -56,10 +56,10 @@ export default function Book({ params }: { params: { bookId: string } }) {
     // determine what page it is and reroute them to correct page display
     // pdf page or note page
     if (page.type == "notes") {
-      router.push(`/dashboard/book/${params.bookId}/note/${page.id}`)
+      router.push(`/dashboard/${params.bookId}/${page.id}`)
     } else if (page.type == "pdf") {
       // handle when user clicks on a pdf type page
-      router.push(`/dashboard/book/${params.bookId}/pdf/${page.id}`)
+      router.push(`/dashboard/${params.bookId}/pdf/${page.id}`)
     }
   
   }
