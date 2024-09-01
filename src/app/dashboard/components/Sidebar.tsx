@@ -94,7 +94,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
                 <Logo />
                 <div className="hidden md:block">
                   <Button
-                    className="border-0 hover:bg-slate-500 bg-transparent"
+                    className="border-0 hover:bg-slate-200 dark:hover:bg-gray-700 bg-transparent"
                     title={locked ? "Unlock Sidebar" : "Lock Sidebar"}
                     variant="outline"
                     onClick={() => setLocked(!locked)}

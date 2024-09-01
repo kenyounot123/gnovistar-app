@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
-import {Sun, Moon, BookOpen} from "lucide-react"
+import {Sun, Moon, BookOpen, ChevronDown} from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { Book } from "@/types/book";
@@ -310,24 +310,27 @@ export const SideBook = ({
           }}
           className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
         >
-          <div className="relative">
+          <div className="relative flex gap-5 items-center justify-between w-full">
             <div
               className="cursor-pointer"
               onClick={handleDropdownToggle}
             >
-              Books
+              Books 
             </div>
+            <ChevronDown className="cursor-pointer" onClick={handleDropdownToggle}/>
           </div>
         </motion.span>
       </div>
       {isDropdownOpen && open &&(
-        <div className="mt-2 w-48">
+        <div className="w-48">
           {books.length > 0 ? (
-            <ul className="list-none">
+            <ul className="py-0 my-2">
               {books.map((book) => (
-                <li key={book.id} className="text-sm py-1 px-2 hover:bg-gray-300 dark:hover:bg-gray-700">
-                  {book.title}
-                </li>
+                <Link key={book.id} href={`/dashboard/${book.id}`}>
+                  <li className="text-xs py-2 px-5 hover:bg-slate-200 dark:hover:bg-gray-700">
+                    {book.title}
+                  </li>
+                </Link>
               ))}
             </ul>
           ) : (
