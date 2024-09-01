@@ -1,18 +1,18 @@
 "use client"
 import { Button } from '@/components/ui/button'; 
-import { Plus } from 'lucide-react'; 
+import { Plus, LoaderCircle } from 'lucide-react'; 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Book } from '@/types/book';
 import { PageType } from '@/types/book';
 import { BookPage } from '@/types/book';
-import { createPage } from '../../actions';
+import { createPage, getPages } from '../../actions';
 
 const dummyBookData = {
   id: "randomString1",
@@ -33,18 +33,34 @@ export default function Book({ params }: { params: { bookId: string } }) {
   // when a page is appended or removed in the db, add or remove the page from the view
   const [selected, setSelected] = useState([]) // state to store selected pages (to be used for deletion )
   const [bookData, setBookData] = useState<Book>(dummyBookData)
-  const [bookPagesData, setBookPagesData] = useState<BookPage[]>(dummyBookData.pages)
+  const [bookPagesData, setBookPagesData] = useState<BookPage[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const router = useRouter()
+  useEffect(() => {
+    const bookId = "t2kT4B1E4guKlBcUYrRX"
+    // const bookId = params.bookId
+    const fetchPages = async () => {
+      try {
+        const pages = await getPages(bookId);
+        setBookPagesData(pages);
+      } catch (error) {
+        console.error("Error fetching pages:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPages()
+  }, [])
 
 
   const handlePageClick = (page:BookPage) => {
     // determine what page it is and reroute them to correct page display
     // pdf page or note page
     if (page.type == "notes") {
-      router.push(`/dashboard/book/${params.bookId}/note/${page.id}`)
+      router.push(`/dashboard/${params.bookId}/${page.id}`)
     } else if (page.type == "pdf") {
       // handle when user clicks on a pdf type page
-      router.push(`/dashboard/book/${params.bookId}/pdf/${page.id}`)
+      router.push(`/dashboard/${params.bookId}/pdf/${page.id}`)
     }
   
   }
@@ -54,8 +70,12 @@ export default function Book({ params }: { params: { bookId: string } }) {
   }
   const handleNoteClick = async () => {
     // handle note creation and save to database 
-    const tempBookId = "HrM2CFXvqSerivtko0ro"
-    const newPage = await createPage(tempBookId, 'notes')
+    const bookId = "t2kT4B1E4guKlBcUYrRX"
+    // const bookId = params.bookId
+    const newPage = {
+      type: "notes"
+    } as BookPage;
+    await createPage(bookId, newPage)
     setBookPagesData([...bookPagesData, newPage]);
   }
   const handleVideoClick = () => {
@@ -86,19 +106,25 @@ export default function Book({ params }: { params: { bookId: string } }) {
         </DropdownMenu>
       </div>
       <p>{dummyBookData.description}</p>
-      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {bookPagesData.map((page, idx) => (
-          <div
-          key={idx}
-          className="hover:-translate-y-2 transition-translate delay-75 duration-300 ease-in-out max-w-[300px] h-[400px] dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md flex items-center justify-center flex-row-wrap"
-          onClick={() => handlePageClick(page)}
-          >
-            <span className="text-neutral-700 dark:text-neutral-300 text-center">
-              Page 
-            </span>
-          </div>
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <LoaderCircle className="w-10 h-10 animate-spin"/>
+        </div>
+      ) : (
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {bookPagesData.map((page, idx) => (
+            <div
+              key={idx}
+              className="hover:-translate-y-2 transition-translate delay-75 duration-300 ease-in-out max-w-[300px] h-[400px] dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md flex items-center justify-center flex-row-wrap"
+              onClick={() => handlePageClick(page)}
+            >
+              <span className="text-neutral-700 dark:text-neutral-300 text-center">
+                {page.type === "notes" ? "Notebook" : "PDF"}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }
