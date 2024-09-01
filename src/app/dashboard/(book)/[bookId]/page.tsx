@@ -37,10 +37,11 @@ export default function Book({ params }: { params: { bookId: string } }) {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const router = useRouter()
   useEffect(() => {
-    const tempBookId = "t2kT4B1E4guKlBcUYrRX"
+    const bookId = "t2kT4B1E4guKlBcUYrRX"
+    // const bookId = params.bookId
     const fetchPages = async () => {
       try {
-        const pages = await getPages(tempBookId);
+        const pages = await getPages(bookId);
         setBookPagesData(pages);
       } catch (error) {
         console.error("Error fetching pages:", error);
@@ -69,11 +70,12 @@ export default function Book({ params }: { params: { bookId: string } }) {
   }
   const handleNoteClick = async () => {
     // handle note creation and save to database 
-    const tempBookId = "t2kT4B1E4guKlBcUYrRX"
+    const bookId = "t2kT4B1E4guKlBcUYrRX"
+    // const bookId = params.bookId
     const newPage = {
       type: "notes"
     } as BookPage;
-    await createPage(tempBookId, newPage)
+    await createPage(bookId, newPage)
     setBookPagesData([...bookPagesData, newPage]);
   }
   const handleVideoClick = () => {

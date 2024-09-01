@@ -13,16 +13,24 @@ export const getNotes = async (bookId: Book["id"], pageId: BookPage["id"]) => {
     throw new Error('You must be signed in!')
   }
   try {
-    const notesRef = collection(db, `users/${userId}/books/${bookId}/notes/${pageId}`);
+    const bookRef = doc(db, `users/${userId}/books/${bookId}`);
     
-    const notesSnapshot = await getDocs(notesRef);
+    const bookDoc = await getDoc(bookRef);
+
+    if (!bookDoc.exists()) {
+      throw new Error('Book does not exist!');
+    }
+  
+    const bookData = bookDoc.data();
     
-    const notes = notesSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    
-    return notes;
+    const selectedPage = bookData.pages.filter((page:BookPage) => {
+      page.id == pageId
+    })
+
+    const notes = selectedPage.content || ""
+  
+    console.log(notes);
+    return notes
   } catch (error) {
     console.error("Error fetching notes: ", error);
     throw new Error("Error fetching notes");
@@ -38,14 +46,10 @@ export const createNotes = async (
     throw new Error('You must be signed in!')
   }
   try {
-    const notesRef = collection(db, `users/${userId}/books/${bookId}/notes/${pageId}`);
+    const notesRef = collection(db, `users/${userId}/books/${bookId}`);
     
-    const docRef = await addDoc(notesRef, {
-      content,
-      createdAt: new Date(),
-    });
+
     
-    console.log("Note created with ID: ", docRef.id);
   } catch (error) {
     console.error("Error creating note: ", error);
     throw new Error("Error creating note");
