@@ -23,13 +23,10 @@ export const getNotes = async (bookId: Book["id"], pageId: BookPage["id"]) => {
   
     const bookData = bookDoc.data();
     
-    const selectedPage = bookData.pages.filter((page:BookPage) => {
-      page.id == pageId
-    })
+    const selectedPage = bookData.pages.find((page:BookPage) => page.id == pageId)
 
     const notes = selectedPage.content || ""
   
-    console.log(notes);
     return notes
   } catch (error) {
     console.error("Error fetching notes: ", error);
@@ -46,9 +43,21 @@ export const createNotes = async (
     throw new Error('You must be signed in!')
   }
   try {
-    const notesRef = collection(db, `users/${userId}/books/${bookId}`);
-    
-
+    const bookRef = doc(db, `users/${userId}/books/${bookId}`);
+    const bookDoc = await getDoc(bookRef);
+  
+    if (!bookDoc.exists()) {
+      throw new Error('Book does not exist!');
+    }
+  
+    const bookData = bookDoc.data();
+    if (!bookData?.pages) {
+      return
+    }
+    const currentPage = bookData.pages.find((page:BookPage) => page.id == pageId)
+    currentPage.content = content
+    // get current page and update its content w the debounced value
+    await updateDoc(bookRef, { pages: bookData.pages });
     
   } catch (error) {
     console.error("Error creating note: ", error);

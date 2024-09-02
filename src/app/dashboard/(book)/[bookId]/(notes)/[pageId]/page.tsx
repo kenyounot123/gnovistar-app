@@ -9,7 +9,8 @@ import { useUser } from "@clerk/nextjs"
 export default function NotePage({ params }: { params: { pageId: string, bookId: string } }) {
   const { user } = useUser()
 
-  const [noteContent, setNoteContent] = useState("")
+  const [noteContent, setNoteContent] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   // This is going to be an editable page
   // Fetches notes from the database and render it out in TipTap editor as content
   // If no notes in the database then just render out a default tip tap editor
@@ -21,8 +22,14 @@ export default function NotePage({ params }: { params: { pageId: string, bookId:
     // change to params.bookId
 
     const fetchNotes = async () => {
-      const notes = await getNotes(bookId, params.pageId)
-      setNoteContent(notes)
+      try {
+        const notes = await getNotes(bookId, params.pageId)
+        setNoteContent(notes)
+      } catch(error) {
+        throw new Error("Error getting the notes from database")
+      } finally {
+        setIsLoading(false)
+      }
     }
 
     fetchNotes()
@@ -35,7 +42,7 @@ export default function NotePage({ params }: { params: { pageId: string, bookId:
     <>
       <ArrowLeft size={32} className="hover:text-primary mb-5" onClick={handleBackClick}/>
       <div className="card">
-        <Tiptap noteContent={noteContent} setNoteContent={setNoteContent}/>
+       {!isLoading && <Tiptap currentBook={bookId} currentPage={params.pageId} noteContent={noteContent} setNoteContent={setNoteContent}/>}
       </div>
     </>
   )

@@ -9,6 +9,8 @@ import { useDebounce } from 'use-debounce';
 import { Editor } from '@tiptap/react'
 import { Indent } from '@/lib/extensions/Indent'
 import React, { useEffect } from 'react'
+import { createNotes } from '../actions'
+import { Book, BookPage } from '@/types/book'
 
 interface MenuBarProps {
   editor: Editor | null
@@ -16,6 +18,8 @@ interface MenuBarProps {
 interface TipTapProps{
   noteContent: string,
   setNoteContent: React.Dispatch<React.SetStateAction<string>>
+  currentBook: Book['id'],
+  currentPage: BookPage['id'],
 }
 const MenuBar = ({ editor }:MenuBarProps) => {
   if (!editor) {
@@ -67,7 +71,7 @@ const MenuBar = ({ editor }:MenuBarProps) => {
   )
 
 }
-const Tiptap = ({noteContent, setNoteContent}:TipTapProps) => {
+const Tiptap = ({currentBook, currentPage, noteContent, setNoteContent}:TipTapProps) => {
   const [debouncedContent] = useDebounce(noteContent, 1000)
   const editor = useEditor({
     extensions: [StarterKit, Indent],
@@ -90,11 +94,15 @@ const Tiptap = ({noteContent, setNoteContent}:TipTapProps) => {
     }
   })
   useEffect(() => {
-    if (debouncedContent) {
-      // Save to the database or perform any action with the debounced content
-      console.log('Saving debounced content:', debouncedContent);
-      // Example: saveToDatabase(debouncedContent);
+
+    const saveContents = async () => {
+      if (debouncedContent) {
+        console.log('Saving debounced content:', debouncedContent);
+        await createNotes(currentBook, currentPage, debouncedContent)
+      }
     }
+    saveContents()
+    
   }, [debouncedContent]);
 
   if (!editor) {
