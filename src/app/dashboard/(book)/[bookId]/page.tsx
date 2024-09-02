@@ -119,7 +119,7 @@ export default function Book({ params }: { params: { bookId: string } }) {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleNoteClick}>
                 <BookIcon className="mr-2 h-4 w-4" />
-                Notebook
+                Notes
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleVideoClick}>
                 <Video className="mr-2 h-4 w-4" />
@@ -151,7 +151,7 @@ export default function Book({ params }: { params: { bookId: string } }) {
                   <FileText className="w-16 h-16 mb-4 text-primary" />
                 )}
                 <span className="text-lg font-medium">
-                  {page.type === "notes" ? "Notebook" : "PDF"}
+                  {page.type === "notes" ? "Notes" : "PDF"}
                 </span>
                 <Checkbox
                   checked={selectedPages.includes(page.id)}
