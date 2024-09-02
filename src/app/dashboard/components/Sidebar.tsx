@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRightFromLine, ArrowLeftFromLine, Sun, Moon } from "lucide-react";
@@ -46,7 +46,6 @@ const dummyBookData = [
 ];
 export function GnovistarSidebar({children}:SideBarProps) {
   const { isSignedIn, isLoaded, user } = useUser()
-  const { theme, setTheme } = useTheme()
   const links = [
     {
       label: "Dashboard",
@@ -94,7 +93,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
                 <Logo />
                 <div className="hidden md:block">
                   <Button
-                    className="border-0 hover:bg-slate-500 bg-transparent"
+                    className="border-0 hover:bg-slate-200 dark:hover:bg-gray-700 bg-transparent"
                     title={locked ? "Unlock Sidebar" : "Lock Sidebar"}
                     variant="outline"
                     onClick={() => setLocked(!locked)}
@@ -119,7 +118,7 @@ export function GnovistarSidebar({children}:SideBarProps) {
               {links.map((link, idx) => (
                 <SidebarLink className="text-primary" key={idx} link={link} />
               ))}
-              <SideDarkMode theme={theme} setTheme={setTheme}/>
+              <SideDarkMode />
             </div>
           </div>
           <div>

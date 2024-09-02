@@ -43,7 +43,7 @@ export default function Dashboard() {
             <h3 className="text-xl font-semibold">{book.bookTitle}</h3>
             <p className="text-sm mb-4">{book.bookPurpose}</p>
             <p className="text-sm text-gray-400 mb-4">{book.bookDescription}</p>
-            <Link href={`/dashboard/book/${book.bookId}`}>
+            <Link href={`/dashboard/${book.bookId}`}>
               <Button variant="outline" className="border-0 w-full bg-primary text-white dark:text-black">Open Book</Button>
             </Link>
           </div>
