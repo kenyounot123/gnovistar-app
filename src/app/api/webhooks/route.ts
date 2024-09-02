@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     try {
       // Update Firestore with the new subscription field
       const userRef = doc(db, 'users', userId);
-      await setDoc(userRef, { subscription: 'free' }, { merge: true });
+      await setDoc(userRef, { subscription: 'free', books: [] }, { merge: true });
 
       console.log(`User ${id} subscription set to free`);
     } catch (error) {
@@ -70,6 +70,6 @@ export async function POST(req: Request) {
       });
     }
   }
-
+  console.log("webhook working")
   return new Response('', { status: 200 })
 }

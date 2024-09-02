@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/select"
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 import { ArrowBigLeft } from 'lucide-react'
+import { doc, collection, updateDoc, setDoc, getDoc, arrayUnion } from "firebase/firestore"; 
+import { db } from "@/firebase";
+import { useAuth } from "@clerk/nextjs";
 
 export default function NewBookForm() {
   const [bookName, setBookName] = useState<string>("");
@@ -24,19 +27,36 @@ export default function NewBookForm() {
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { userId } = useAuth();
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setLoading(true);
-    await fetchGeminiData(bookName, description, purpose);
 
-    
-    console.log(`Book: ${bookName}, Purpose: ${purpose}, Description: ${description}`);
+    try {
+      if (!userId) {
+        console.error("User is not authenticated");
+        return;
+      }
+      const userDocRef = doc(db, "users", userId); 
+      await updateDoc(userDocRef, {
+        books: arrayUnion(bookName)
+      }); 
 
-    setConfirmation(true);
-    setLoading(true);
-  };
+      await fetchGeminiData(bookName, description, purpose);
+      
+      console.log(`Book: ${bookName}, Purpose: ${purpose}, Description: ${description}`);
+
+      setConfirmation(true);
+    } catch (error) {
+      console.error("Error creating book or updating Firestore:", error);
+      // Handle error as needed
+    } finally {
+      setLoading(false);
+    }
+  }; 
 
   const generateGeminiPrompt = (bookName: string, description: string, purpose: string) => {
     
@@ -65,29 +85,68 @@ export default function NewBookForm() {
 
   const fetchGeminiData = async (bookName: string, description: string, purpose: string) => {
     const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY; // Replace with your actual API key
-
+  
     // Generate the prompt based on user input
     const prompt = generateGeminiPrompt(bookName, description, purpose);
-
+  
     const genAI = new GoogleGenerativeAI(geminiApiKey);
-
-    const model = genAI.getGenerativeModel(
-      { model: "gemini-1.5-flash",
+  
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
       generationConfig: { responseMimeType: "application/json" }
-      });
-
-    
+    });
+  
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const starter = response.text();
-    console.log(starter);
+    const starter = await response.text();
     
+    // Parse the response JSON
+    const data = JSON.parse(starter);
+
+    if (!userId) {
+      console.error("User is not authenticated");
+      return;
+    }
+    const userDocRef = doc(db, "users", userId); 
+    const bookCollectionRef = collection(userDocRef, bookName);
+      const initDocRef = doc(bookCollectionRef, 'init');
+
+      
+      await setDoc(initDocRef, {
+        description: description,
+        purpose: purpose,
+        embeds: {}
+      });
+  
+    
+    
+    data.materials.forEach(async (material: { name: string; link: string }) => {
+      if (!material.link.includes("youtube.com")) {
+        // Skip YouTube videos
+        const materialDocRef = doc(bookCollectionRef, material.name);
+        await setDoc(materialDocRef, {
+          name: material.name,
+          link: material.link
+        });
+      } else {
+        const videoEmbed = {
+          title: material.name,
+          link: material.link
+        };
+        await updateDoc(initDocRef, {
+          embeds: arrayUnion(videoEmbed)
+        });
+      }
+    });
+    
+    console.log('Starter materials added to Firestore.');
   };
+  
 
   if (confirmation) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-100">
-        <div className="w-full max-w-5xl p-10 bg-white shadow-md rounded">
+        <div className="w-full max-w-5xl p-10 bg-black shadow-md rounded">
           <h1 className="text-3xl font-bold mb-2 text-center">Yay! Your <span className="text-blue-500">{bookName}</span> book has been created.</h1>
           <p className="text-center mb-8">We've filled it with some starter material that you can find useful. Happy learning!</p>
           <Link href="/dashboard">
