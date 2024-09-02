@@ -42,7 +42,9 @@ export default function Book({ params }: { params: { bookId: string } }) {
     const fetchPages = async () => {
       try {
         const pages = await getPages(bookId);
-        setBookPagesData(pages);
+        if (pages) {
+          setBookPagesData(pages);
+        }
       } catch (error) {
         console.error("Error fetching pages:", error);
       } finally {

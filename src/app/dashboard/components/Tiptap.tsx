@@ -4,12 +4,18 @@ import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from '@tiptap/reac
 import StarterKit from '@tiptap/starter-kit'
 import { Button } from '@/components/ui/button'
 import { Bold, Italic, Code, List, Heading1, Heading2 } from 'lucide-react'
+import { useDebounce } from 'use-debounce';
 
 import { Editor } from '@tiptap/react'
 import { Indent } from '@/lib/extensions/Indent'
+import React, { useEffect } from 'react'
 
 interface MenuBarProps {
   editor: Editor | null
+}
+interface TipTapProps{
+  noteContent: string,
+  setNoteContent: React.Dispatch<React.SetStateAction<string>>
 }
 const MenuBar = ({ editor }:MenuBarProps) => {
   if (!editor) {
@@ -61,13 +67,16 @@ const MenuBar = ({ editor }:MenuBarProps) => {
   )
 
 }
-const Tiptap = () => {
+const Tiptap = ({noteContent, setNoteContent}:TipTapProps) => {
+  const [debouncedContent] = useDebounce(noteContent, 1000)
   const editor = useEditor({
     extensions: [StarterKit, Indent],
-    content: `
-      <h1>
+    content: `${noteContent == "" 
+      ? 
+      `<h1>
         Type here...
-      </h1>
+      </h1>`
+      : noteContent}
     `,
     editorProps: {
       attributes: {
@@ -76,13 +85,18 @@ const Tiptap = () => {
     },
     immediatelyRender: false,
     onUpdate: () => {
-      // On update of editor content i can save to database ? 
-    
-      // maybe use debounce to save everytime user stops typing 
-      // then when entering a note book page the content will still be there
-      console.log(editor?.getJSON())
+      const content = editor?.getHTML() as string
+      setNoteContent(content)
     }
   })
+  useEffect(() => {
+    if (debouncedContent) {
+      // Save to the database or perform any action with the debounced content
+      console.log('Saving debounced content:', debouncedContent);
+      // Example: saveToDatabase(debouncedContent);
+    }
+  }, [debouncedContent]);
+
   if (!editor) {
     return null
   }

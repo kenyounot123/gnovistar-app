@@ -73,10 +73,11 @@ export const getPages = async (bookId: Book['id']) => {
   const bookData = bookDoc.data();
   
   if (!bookData?.pages) {
-    throw new Error('No pages found in this book!');
+    return
+  } else {
+    return bookData.pages
   }
 
-  return bookData.pages;
 };
 
 export const createPage = async (bookId: Book['id'], pageContent: BookPage) => {

@@ -10,7 +10,6 @@ export default function NotePage({ params }: { params: { pageId: string, bookId:
   const { user } = useUser()
 
   const [noteContent, setNoteContent] = useState("")
-  console.log(noteContent)
   // This is going to be an editable page
   // Fetches notes from the database and render it out in TipTap editor as content
   // If no notes in the database then just render out a default tip tap editor
@@ -34,9 +33,9 @@ export default function NotePage({ params }: { params: { pageId: string, bookId:
   }
   return (
     <>
-      <ArrowLeft  size={32} className="hover:text-primary mb-5" onClick={handleBackClick}/>
+      <ArrowLeft size={32} className="hover:text-primary mb-5" onClick={handleBackClick}/>
       <div className="card">
-        <Tiptap/>
+        <Tiptap noteContent={noteContent} setNoteContent={setNoteContent}/>
       </div>
     </>
   )
