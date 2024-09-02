@@ -1,6 +1,7 @@
 'use client'
 import Tiptap from "@/app/dashboard/components/Tiptap"
-import { ArrowLeft } from "lucide-react"
+import { ChevronLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { getNotes, createNotes } from "@/app/dashboard/actions"
@@ -40,9 +41,13 @@ export default function NotePage({ params }: { params: { pageId: string, bookId:
   }
   return (
     <>
-      <ArrowLeft size={32} className="hover:text-primary mb-5" onClick={handleBackClick}/>
+      <div className="flex items-center mb-6">
+        <Button variant="ghost" size="sm" className="mr-4" onClick={handleBackClick}>
+          <ChevronLeft className="h-6 w-6" />
+        </Button>
+      </div>
       <div className="card">
-       {!isLoading && <Tiptap currentBook={bookId} currentPage={params.pageId} noteContent={noteContent} setNoteContent={setNoteContent}/>}
+        {!isLoading && <Tiptap currentBook={bookId} currentPage={params.pageId} noteContent={noteContent} setNoteContent={setNoteContent}/>}
       </div>
     </>
   )

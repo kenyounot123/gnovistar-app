@@ -3,7 +3,7 @@
 import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Button } from '@/components/ui/button'
-import { Bold, Italic, Code, List, Heading1, Heading2 } from 'lucide-react'
+import { Bold, Italic, Code, List, Heading1, Heading2, ChevronLeft } from 'lucide-react'
 import { useDebounce } from 'use-debounce';
 
 import { Editor } from '@tiptap/react'
@@ -26,48 +26,56 @@ const MenuBar = ({ editor }:MenuBarProps) => {
     return null
   }
   return (
-    <div className="flex gap-1 mb-4 text-black border-b-2 border-primary">
-      <Button
-        title='Bold'
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`${editor.isActive('bold') ? 'bg-accent' : 'bg-transparent'} text-primary hover:bg-accent`}
-      >
-        <Bold />
-      </Button>
-      <Button
-        title='Italic'
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`${editor.isActive('italic') ? 'bg-accent' : 'bg-transparent'} text-primary hover:bg-accent`}
-      >
-        <Italic />
-      </Button>
-      <Button
-        title='Code'
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        className={`${editor.isActive('code') ? 'bg-accent' : 'bg-transparent'} text-primary hover:bg-accent`}
-      >
-        <Code />
-      </Button>
-      <Button
-        title='Bulleted List'
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`${editor.isActive('bulletList') ? 'bg-accent' : 'bg-transparent'} text-primary hover:bg-accent`}
-      >
-        <List />
-      </Button>
-      <Button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={`${editor.isActive('heading', { level: 1 }) ? 'bg-accent' : 'bg-transparent'} text-primary hover:bg-accent`}
-      >
-        <Heading1/>
-      </Button>
-      <Button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`${editor.isActive('heading', { level: 2 }) ? 'bg-accent' : 'bg-transparent'} text-primary hover:bg-accent`}
-      >
-        <Heading2/>
-      </Button>
-    </div>
+    <div className="flex items-center space-x-2 mb-4 text-gray-500">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          className={editor.isActive('bold') ? 'bg-accent text-white' : ''}
+        >
+          <Bold className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          className={editor.isActive('italic') ? 'bg-accent text-white' : ''}
+        >
+          <Italic className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleCode().run()}
+          className={editor.isActive('code') ? 'bg-accent text-white' : ''}
+        >
+          <Code className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={editor.isActive('bulletList') ? 'bg-accent text-white' : ''}
+        >
+          <List className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          className={editor.isActive('heading', { level: 1 }) ? 'bg-accent text-white' : ''}
+        >
+          <Heading1 className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          className={editor.isActive('heading', { level: 2 }) ? 'bg-accent text-white' : ''}
+        >
+          <Heading2 className="h-4 w-4" />
+        </Button>
+      </div>
   )
 
 }
@@ -109,30 +117,42 @@ const Tiptap = ({currentBook, currentPage, noteContent, setNoteContent}:TipTapPr
     return null
   }
   return (
-    <>
+    <div className="max-w-4xl mx-auto px-4 py-8">
       <MenuBar editor={editor}/>
-      {editor && <FloatingMenu className="rounded-md bg-white p-1 shadow-md flex gap-1" tippyOptions={{ duration: 100 }} editor={editor}>
-        <Button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          className={`${editor.isActive('heading', { level: 1 }) ? 'bg-accent' : ''} bg-slate-500 px-2 py-1 m-0 h-1/2 bg-transparent text-accent`}
+      {editor && (
+        <FloatingMenu
+          editor={editor}
+          tippyOptions={{ duration: 100 }}
+          className="bg-white rounded-md shadow-lg border border-gray-200 p-1 flex items-center space-x-1"
         >
-          <Heading1 />
-        </Button>
-        <Button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={`${editor.isActive('heading', { level: 1 }) ? 'bg-accent' : ''} bg-slate-500 px-2 py-1 m-0 h-1/2 bg-transparent text-accent`}
-        >
-          <Heading2 />
-        </Button>
-        <Button
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={`${editor.isActive('heading', { level: 1 }) ? 'bg-accent' : ''} bg-slate-500 px-2 py-1 m-0 h-1/2 bg-transparent text-accent`}
-        >
-          <List/>
-        </Button>
-      </FloatingMenu>}
-      <EditorContent editor={editor} />
-    </>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+            className={editor.isActive('heading', { level: 1 }) ? 'bg-gray-200' : ''}
+          >
+            <Heading1 className="h-4 w-4 text-black" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            className={editor.isActive('heading', { level: 2 }) ? 'bg-gray-200' : ''}
+          >
+            <Heading2 className="h-4 w-4 text-black" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            className={editor.isActive('bulletList') ? 'bg-gray-200' : ''}
+          >
+            <List className="h-4 w-4 text-black" />
+          </Button>
+        </FloatingMenu>
+      )}
+      <EditorContent editor={editor} className="border-l-4 border-transparent focus-within:border-gray-200 pl-4 transition-all duration-200" />
+    </div>
   )
 }
 
