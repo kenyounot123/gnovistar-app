@@ -1,6 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'; 
-import { Plus, LoaderCircle } from 'lucide-react'; 
+import { Plus, LoaderCircle, FileText, Video, BookIcon } from 'lucide-react'; 
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,9 @@ import type { Book } from '@/types/book';
 import { PageType } from '@/types/book';
 import { BookPage } from '@/types/book';
 import { createPage, getPages } from '../../actions';
+import { Checkbox } from '@/components/ui/checkbox';
+import { DeleteModal } from '../../components/DeleteModal';
+import { Card, CardContent } from '@/components/ui/card';
 
 const dummyBookData = {
   id: "randomString1",
@@ -31,13 +34,13 @@ const dummyBookData = {
 export default function Book({ params }: { params: { bookId: string } }) {
   // get the bookPages from current book and save it into state
   // when a page is appended or removed in the db, add or remove the page from the view
-  const [selected, setSelected] = useState([]) // state to store selected pages (to be used for deletion )
+  const [selectedPages, setSelectedPages] = useState<BookPage['id'][]>([]) // state to store selected pages (to be used for deletion )
   const [bookData, setBookData] = useState<Book>(dummyBookData)
   const [bookPagesData, setBookPagesData] = useState<BookPage[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const router = useRouter()
+  const bookId = "t2kT4B1E4guKlBcUYrRX"
   useEffect(() => {
-    const bookId = "t2kT4B1E4guKlBcUYrRX"
     // const bookId = params.bookId
     const fetchPages = async () => {
       try {
@@ -53,6 +56,14 @@ export default function Book({ params }: { params: { bookId: string } }) {
     };
     fetchPages()
   }, [])
+
+  const toggleSelectPage = (pageId: string) => {
+    setSelectedPages(prevSelected =>
+      prevSelected.includes(pageId)
+        ? prevSelected.filter(id => id !== pageId)
+        : [...prevSelected, pageId]
+    );
+  };
 
 
   const handlePageClick = (page:BookPage) => {
@@ -84,49 +95,75 @@ export default function Book({ params }: { params: { bookId: string } }) {
     
   }
   return (
-    <>
-      <div className='flex justify-between items-center'>
-        <h1 className="text-2xl font-semibold mb-4">{dummyBookData.title}</h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button>
-              <Plus/>
-              Add Page
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className='border-0 bg-background'>
-            <DropdownMenuItem onClick={handlePdfClick}>
-              PDF
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleNoteClick}>
-              Notebook
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleVideoClick}>
-              Video
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+        <h1 className="text-3xl font-bold mb-4 md:mb-0">{dummyBookData.title}</h1>
+        <div className="flex gap-2">
+          <DeleteModal 
+            bookId={bookId} 
+            selectedPages={selectedPages} 
+            setSelectedPages={setSelectedPages} 
+            setBookPagesData={setBookPagesData}
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Page
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className='border-0 bg-background'>
+              <DropdownMenuItem onClick={handlePdfClick}>
+                <FileText className="mr-2 h-4 w-4" />
+                PDF
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleNoteClick}>
+                <BookIcon className="mr-2 h-4 w-4" />
+                Notebook
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleVideoClick}>
+                <Video className="mr-2 h-4 w-4" />
+                Video
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-      <p>{dummyBookData.description}</p>
+
+      <p className="text-lg text-muted-foreground mb-8">{dummyBookData.description}</p>
+
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <LoaderCircle className="w-10 h-10 animate-spin"/>
+          <LoaderCircle className="w-12 h-12 animate-spin text-primary" />
         </div>
       ) : (
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {bookPagesData.map((page, idx) => (
-            <div
-              key={idx}
-              className="hover:-translate-y-2 transition-translate delay-75 duration-300 ease-in-out max-w-[300px] h-[400px] dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md flex items-center justify-center flex-row-wrap"
+            <Card 
+              key={idx} 
+              className="relative cursor-pointer hover:shadow-lg transition-shadow duration-300"
               onClick={() => handlePageClick(page)}
             >
-              <span className="text-neutral-700 dark:text-neutral-300 text-center">
-                {page.type === "notes" ? "Notebook" : "PDF"}
-              </span>
-            </div>
+              <CardContent className="p-6 flex flex-col items-center justify-center h-[300px]">
+                {page.type === "notes" ? (
+                  <BookIcon className="w-16 h-16 mb-4 text-primary" />
+                ) : (
+                  <FileText className="w-16 h-16 mb-4 text-primary" />
+                )}
+                <span className="text-lg font-medium">
+                  {page.type === "notes" ? "Notebook" : "PDF"}
+                </span>
+                <Checkbox
+                  checked={selectedPages.includes(page.id)}
+                  onCheckedChange={() => toggleSelectPage(page.id)}
+                  className="absolute top-4 left-4"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </CardContent>
+            </Card>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

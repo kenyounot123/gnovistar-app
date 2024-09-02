@@ -6,6 +6,8 @@ import {Sun, Moon, BookOpen, ChevronDown} from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { Book } from "@/types/book";
+import { useTheme } from 'next-themes'
+import { useEffect } from "react";
 
 interface Links {
   label: string;
@@ -234,17 +236,22 @@ export const SideButton = ({
   );
 };
 interface SideDarkModeProps {
-  theme: string | undefined;
-  setTheme: (theme: string) => void;
   className?: string;
 }
 
 export const SideDarkMode = ({
-  theme,
-  setTheme,
   className,
 }: SideDarkModeProps) => {
   const { open, animate } = useSidebar(); // Assuming useSidebar is a hook for managing sidebar state
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   const isDarkMode = theme === 'dark';
   const toggleTheme = () => setTheme(isDarkMode ? 'light' : 'dark');

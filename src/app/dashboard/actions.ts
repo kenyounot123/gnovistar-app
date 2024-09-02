@@ -9,9 +9,6 @@ const userId = "8m3thR6fquxAqJ8o5v6F"
 
 export const getNotes = async (bookId: Book["id"], pageId: BookPage["id"]) => {
   // const { userId } = auth()
-  if (!userId) {
-    throw new Error('You must be signed in!')
-  }
   try {
     const bookRef = doc(db, `users/${userId}/books/${bookId}`);
     
@@ -39,9 +36,6 @@ export const createNotes = async (
   content: string
 ) => {
   // const { userId } = auth()
-  if (!userId) {
-    throw new Error('You must be signed in!')
-  }
   try {
     const bookRef = doc(db, `users/${userId}/books/${bookId}`);
     const bookDoc = await getDoc(bookRef);
@@ -68,9 +62,6 @@ export const createNotes = async (
 
 export const getPages = async (bookId: Book['id']) => {
   // const { userId } = auth();
-  if (!userId) {
-    throw new Error('You must be signed in!');
-  }
 
   const bookRef = doc(db, `users/${userId}/books/${bookId}`);
   const bookDoc = await getDoc(bookRef);
@@ -91,10 +82,6 @@ export const getPages = async (bookId: Book['id']) => {
 
 export const createPage = async (bookId: Book['id'], pageContent: BookPage) => {
   // const { userId } = auth();
-  if (!userId) {
-    throw new Error('You must be signed in!');
-  }
-
   const bookRef = doc(db, `users/${userId}/books/${bookId}`);
   const bookDoc = await getDoc(bookRef);
   
@@ -116,3 +103,18 @@ export const createPage = async (bookId: Book['id'], pageContent: BookPage) => {
     pages: updatedPages,
   });
 };
+
+export const deletePagesFromBook = async (bookId: Book['id'], pages: BookPage["id"][]) => {
+  // const { userId } = auth();
+  const bookRef = doc(db, `users/${userId}/books/${bookId}`)
+  const bookDoc = await getDoc(bookRef)
+  if (!bookDoc.exists()) {
+    throw new Error('Book does not exist!');
+  }
+  const currentPages = bookDoc.data()?.pages || [];
+  const updatedPages = currentPages.filter((page: BookPage) => !pages.includes(page.id));
+  await updateDoc(bookRef, {
+    pages: updatedPages
+  });
+  console.log('Pages deleted successfully');
+}
