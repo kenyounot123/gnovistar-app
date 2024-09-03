@@ -47,54 +47,54 @@ export default function LandingPage() {
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="flex-col md:flex-row flex justify-center items-center py-5 gap-5">
-            <div className="self-start flex-col flex gap-10 px-5">
+            <div className="md:self-start flex-col flex gap-10 px-5">
               <div className="p-5 rounded-full w-min bg-primary">
-                <FileStack size={64} className="text-accent"/>
+                <FileStack size={48} className="text-accent"/>
               </div>
               <div>
                 <h1 className="text-3xl font-bold mb-5"> Organize with 'Books'</h1>
                 <p className="max-w-[500px]">Start by creating a ‘Book’. Enter a title and description, and let the AI recommend articles from Google Scholar and blogs to jumpstart your collection.</p>
               </div>
             </div>
-            <div className="rounded bg-[#5C5C5C] shadow-lg self-start" style={{
+            <div className="rounded bg-[#5C5C5C] shadow-lg md:self-start border-full border-8" style={{
               background:
                 "linear-gradient(180deg, var(--neutral-800), var(--neutral-900)",
             }}>
-              <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+              <Image src="/multiplePdfs.png" width={500} height={300} alt={"GnoVistar PDF"} className="rounded"/>
             </div>
           </div>
           <div className="flex-col md:flex-row flex justify-center items-center py-5 gap-5 md:flex-row-reverse">
-            <div className="self-start flex-col flex gap-10 px-5">
+            <div className="md:self-start flex-col flex gap-10 px-5">
               <div className="p-5 rounded-full w-min bg-primary">
-                <PenTool size={64} className="text-accent"/>
+                <PenTool size={48} className="text-accent"/>
               </div>
               <div>
                 <h1 className="text-3xl font-bold mb-5">Engage with PDFs</h1>
                 <p className="max-w-[500px]">Upload PDFs based on AI suggestions, and make them your own by highlighting, adding notes, and commenting directly on the documents.</p>
               </div>
             </div>
-            <div className="rounded bg-[#5C5C5C] shadow-lg self-start" style={{
+            <div className="rounded bg-[#5C5C5C] shadow-lg md:self-start border-full border-8" style={{
               background:
                 "linear-gradient(180deg, var(--neutral-800), var(--neutral-900)",
             }}>
-              <Image src="/pdf1.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+              <Image src="/pdf1.png" width={500} height={300} alt={"GnoVistar PDF"} className="rounded"/>
             </div>
           </div>
           <div className="flex-col md:flex-row flex justify-center items-center py-5 gap-5">
-            <div className="self-start flex-col flex gap-10 px-5">
+            <div className="md:self-start flex-col flex gap-10 px-5">
               <div className="p-5 rounded-full w-min bg-primary">
-              <Bot size={64} className="text-accent" />
+              <Bot size={48} className="text-accent" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold mb-5">AI-Generated Summaries</h1>
                 <p className="max-w-[500px]">Automatically receive summaries and key insights from your PDFs, helping you understand and manage your documents more effectively.</p>
               </div>
             </div>
-            <div className="shadow-lg rounded bg-[#5C5C5C] self-start"style={{
+            <div className="shadow-lg rounded bg-[#5C5C5C] md:self-start border-full border-8" style={{
               background:
                 "linear-gradient(180deg, var(--neutral-800), var(--neutral-900)",
             }}>
-              <Image src="/pdf2.png" width={500} height={300} alt={"GnoVistar PDF"}/>
+              <Image src="/pdf2.png" width={500} height={300} alt={"GnoVistar PDF"} className="rounded"/>
             </div>
           </div>
         </section>

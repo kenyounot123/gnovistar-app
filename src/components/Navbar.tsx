@@ -12,8 +12,8 @@ export default function Navbar() {
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
-      <Link className="flex items-center justify-center" href="/">
-        <SvgLogo width="32" height="32" color="66CCCC"/>
+      <Link className="flex items-center justify-center gap-1" href="/">
+        <SvgLogo width="28" height="28" color="66CCCC"/>
         <span className="font-bold text-lg">Gnovistar</span>
       </Link>
       <nav className="ml-auto flex items-center">
