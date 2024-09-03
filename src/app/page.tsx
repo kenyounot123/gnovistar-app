@@ -118,6 +118,7 @@ export default function LandingPage() {
                   "Basic AI Summarization",
                   "1 Book Limit"
                 ]}
+                link="/dashboard"
                 buttonText="Get Started"
               />
               <PricingCard
@@ -131,6 +132,7 @@ export default function LandingPage() {
                   "AI Suggestions and links to articles"
                 ]}
                 buttonText="Choose Basic"
+                checkout={true}
                 highlighted={true}
               />
               <PricingCard
@@ -144,6 +146,7 @@ export default function LandingPage() {
                   "AI Suggestions and links to articles",
                   "YouTube video recommendations"
                 ]}
+                checkout={true}
                 buttonText="Choose Pro"
               />
             </div>
