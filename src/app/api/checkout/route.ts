@@ -14,16 +14,10 @@ export async function POST(req: NextRequest) {
     const { plan }: {plan: Plan} = await req.json()
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      // replace with env keys 
       line_items: [
         {
-          price_data: {
-            currency: 'usd',
-            recurring: { interval: 'month' },
-            product_data: {
-              name: `${plan} Plan`,
-            },
-            unit_amount: plan === 'Basic' ? 499 : 999, // Price in cents
-          },
+          price: `${plan == 'Basic' ? 'price_1Pv25CRpMX9bZU9FnrAwnyxu': 'price_1Pv0kvRpMX9bZU9FXLawb4dO'}`,
           quantity: 1,
         }
       ],
