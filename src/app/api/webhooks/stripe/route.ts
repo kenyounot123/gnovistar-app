@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { db } from "@/firebase";
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { useAuth } from "@clerk/nextjs";
+
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
 export async function POST(req: Request) {
+  const { userId } = useAuth()
   const body = await req.text();
   const signature = headers().get('stripe-signature')
   let data;
@@ -24,6 +29,8 @@ export async function POST(req: Request) {
   switch (eventType) {
     case 'checkout.session.completed': {
       // handle successful checkout 
+      // get the user from checkout session and then update their plan to 
+      // the plan they paid for , 
       const session = event.data.object as Stripe.Checkout.Session
       const sessionId = session.id
       const fullSession = await stripe.checkout.sessions.retrieve(
@@ -32,13 +39,24 @@ export async function POST(req: Request) {
           expand: ['line_items']
         }
       )
-
+      const lineItems = fullSession.line_items?.data
+      const planPurchased = lineItems?.[0]?.description as string
       const customerId = session.customer as string;
-      const customer = await stripe.customers.retrieve(customerId) 
-      console.log(fullSession)
-      console.log(customerId)
-      console.log(customer)
-
+      console.log(lineItems)
+      if (userId) {
+        // get the user from firebase and update its fields
+        const docRef = doc(db, `users/${userId}`)
+        const userDoc = await getDoc(docRef)
+        if (!userDoc.exists()) {
+          throw new Error('Book does not exist!');
+        }
+        await updateDoc(docRef, {
+          subscription: planPurchased.split(" ")[0],
+          customerId: customerId,
+        })
+      } else {
+        return
+      }
       break
 
     }
