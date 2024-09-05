@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { db } from "@/firebase";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import { useAuth } from "@clerk/nextjs";
+import { getAuth } from "@clerk/nextjs/server";
 
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {apiVersion: '2024-06-20'})
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
-export async function POST(req: Request) {
-  const { userId } = useAuth()
+export async function POST(req: NextRequest) {
+  const { userId } = getAuth(req)
   const body = await req.text();
   const signature = headers().get('stripe-signature')
   let data;
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       const lineItems = fullSession.line_items?.data
       const planPurchased = lineItems?.[0]?.description as string
       const customerId = session.customer as string;
-      console.log(lineItems)
+
       if (userId) {
         // get the user from firebase and update its fields
         const docRef = doc(db, `users/${userId}`)
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
           customerId: customerId,
         })
       } else {
-        return
+        return NextResponse.json({error: "User not found"}, { status: 404})
       }
       break
 

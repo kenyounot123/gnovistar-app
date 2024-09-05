@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  typescript: true
+  typescript: true,
+  apiVersion: '2024-06-20'
 })
 
 type Plan = 'Basic' | 'Pro';
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
         }
       ],
       mode: 'subscription',
-      success_url:`${origin}/`,
+      success_url:`${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/`
     });
     return NextResponse.json({ id: session.id });
