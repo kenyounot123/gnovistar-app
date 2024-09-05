@@ -1,10 +1,15 @@
-import { CheckCircle } from "lucide-react"
-import Link from "next/link"
+'use client'
+import { CheckCircle } from "lucide-react";
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSearchParams } from 'next/navigation'
 
 export default function SuccessPage() {
+  const searchParams = useSearchParams()
+  const session_id = searchParams.get('session_id')
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-md">
@@ -14,9 +19,9 @@ export default function SuccessPage() {
           </div>
           <CardTitle className="text-2xl font-bold text-center mt-4">Payment Successful!</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-full">
           <p className="text-center text-gray-400">
-            Thank you for your purchase. We've sent a confirmation email with your order details. Make sure to refresh your dashboard.
+            Thank you for your purchase. {session_id}
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
@@ -26,5 +31,5 @@ export default function SuccessPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
